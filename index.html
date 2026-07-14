@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="يوسف — مبرمج مواقع، أدوات، بوتات وسكربات. سيرفرات VPS و RDP بأسعار تنافسية.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="يوسف - مبرمج تقني">
+<meta property="og:description" content="مبرمج مواقع، أدوات، بوتات وسكربات. سيرفرات VPS و RDP بأسعار تنافسية.">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="يوسف - مبرمج تقني">
+<meta name="twitter:description" content="مبرمج مواقع، أدوات، بوتات وسكربات. سيرفرات VPS و RDP بأسعار تنافسية.">
+<meta name="theme-color" content="#FFC2D1">
+<meta name="color-scheme" content="light">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'">
+<title>يوسف - مبرمج تقني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --p50:#FFE5EC;
+    --p100:#FFC2D1;
+    --p200:#FFB3C6;
+    --p300:#FF8FAB;
+    --p400:#FB6F92;
+    --ink:#33131f;
+    --ink-soft:#7a4b58;
+    --ink-faint:#9a6f7a;
+
+    --glass-bg: rgba(255,255,255,0.28);
+    --glass-bg-strong: rgba(255,255,255,0.5);
+    --glass-border: rgba(255,255,255,0.65);
+    --glass-shadow: 0 8px 32px rgba(70,20,35,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Tajawal', sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, var(--p50) 0%, transparent 55%),
+      radial-gradient(circle at 85% 20%, var(--p100) 0%, transparent 50%),
+      radial-gradient(circle at 50% 90%, var(--p200) 0%, transparent 60%),
+      linear-gradient(160deg, var(--p50) 0%, var(--p100) 55%, var(--p200) 100%);
+    color: var(--ink);
+    min-height:100vh;
+    overflow-x:hidden;
+    overscroll-behavior-y:none;
+    position:relative;
+    -webkit-font-smoothing:antialiased;
+    font-synthesis:none;
+    text-rendering:optimizeSpeed;
+  }
+
+  /* ===================== خلفية ضبابية متحركة (aurora) ===================== */
+  .aurora{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .aurora{ contain: strict; }
+  .aurora span{
+    position:absolute;
+    border-radius:50%;
+    filter: blur(46px);
+    opacity:0.5;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    animation: drift 26s ease-in-out infinite;
+  }
+  .aurora span:nth-child(1){width:min(38vw,460px);height:min(38vw,460px);background:var(--p400);top:-10%;right:-8%;animation-duration:24s;}
+  .aurora span:nth-child(2){width:min(32vw,400px);height:min(32vw,400px);background:var(--p300);bottom:-12%;left:-10%;animation-duration:30s;animation-delay:-6s;}
+  .aurora span:nth-child(3){width:min(24vw,300px);height:min(24vw,300px);background:var(--p200);top:45%;left:55%;animation-duration:22s;animation-delay:-11s;opacity:0.35;}
+  @keyframes drift{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(-4%,6%) scale(1.12); }
+  }
+
+  .noise{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    opacity:0.035;
+    pointer-events:none;
+    contain: strict;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  header, section, footer{ position:relative; z-index:1; contain: layout style; }
+  .about, .skills, .pricing, .steps, .faq, .contact{
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 700px;
+  }
+
+  /* ===================== أزرار زجاجية بأسلوب iOS Liquid Glass ===================== */
+  .liquid{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow:
+      var(--glass-shadow),
+      inset 0 1px 0 rgba(255,255,255,0.85),
+      inset 0 -6px 14px rgba(255,255,255,0.12);
+    border-radius: 999px;
+    color: var(--ink);
+    text-decoration:none;
+    cursor:pointer;
+    contain: paint;
+    touch-action: manipulation;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, background .35s;
+    -webkit-user-select:none; user-select:none;
+  }
+  .liquid::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 45%);
+    pointer-events:none;
+  }
+  .liquid:active{ transform: scale(0.96); }
+
+  /* بديل خفيف لأي متصفح لا يدعم backdrop-filter (تفادي عنصر شفاف بلا وضوح) */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+    .liquid{ background: var(--glass-bg-strong); }
+  }
+
+  .btn{
+    padding:15px 34px;
+    font-weight:700;
+    font-size:0.98rem;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, rgba(251,111,146,0.85), rgba(255,143,171,0.75));
+    color:#fff;
+    border-color: rgba(255,255,255,0.55);
+    box-shadow:
+      0 14px 30px rgba(251,111,146,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.6),
+      0 0 0 2px rgba(251,111,146,0.3);
+    animation: border-glow 3s ease-in-out infinite;
+  }
+  @keyframes border-glow{
+    0%, 100%{ box-shadow: 0 14px 30px rgba(251,111,146,0.4), inset 0 1px 0 rgba(255,255,255,0.6), 0 0 0 2px rgba(251,111,146,0.3); }
+    50%{ box-shadow: 0 14px 30px rgba(251,111,146,0.4), inset 0 1px 0 rgba(255,255,255,0.6), 0 0 0 3px rgba(255,143,171,0.65); }
+  }
+  .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 18px 38px rgba(251,111,146,0.5), inset 0 1px 0 rgba(255,255,255,0.6); animation-play-state:paused; }
+  .btn-ghost:hover{ transform: translateY(-3px); background: var(--glass-bg-strong); }
+
+  /* ===================== الشريط العلوي ===================== */
+  .nav-wrap{
+    position:fixed;
+    top:20px;
+    left:0; right:0;
+    display:flex;
+    justify-content:center;
+    z-index:50;
+    padding:0 5%;
+  }
+  .nav{
+    width:100%;
+    max-width:900px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 22px;
+    border-radius:999px;
+  }
+  .brand{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:1.15rem;
+    color: var(--ink);
+    letter-spacing:0.2px;
+  }
+  .brand em{ color: var(--p400); font-style:normal; }
+  .nav-links{
+    display:flex;
+    gap:8px;
+    font-weight:600;
+    font-size:0.92rem;
+  }
+  .nav-links a{
+    color: var(--ink-soft);
+    text-decoration:none;
+    padding:9px 16px;
+    border-radius:999px;
+    transition: background .3s, color .3s;
+  }
+  .nav-links a:hover{ background: rgba(255,255,255,0.5); color: var(--p400); }
+  .nav-cta{ font-size:0.85rem; padding:10px 20px; }
+
+  .menu-toggle{ display:none; }
+
+  /* ===================== الواجهة الرئيسية ===================== */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 140px 6% 60px;
+    padding-left: max(6%, env(safe-area-inset-left));
+    padding-right: max(6%, env(safe-area-inset-right));
+    gap:26px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    letter-spacing:0.5px;
+    color: var(--ink-soft);
+    padding:9px 20px;
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    opacity:0;
+    animation: fadeUp .8s ease forwards;
+  }
+  .eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--p400);
+    box-shadow:0 0 0 0 rgba(251,111,146,0.6);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(251,111,146,0.55); }
+    50%{ box-shadow:0 0 0 7px rgba(251,111,146,0); }
+  }
+
+  .hero-identity{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .hero-avatar{
+    width:60px;height:60px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:1.5rem;
+    color:#fff;
+    flex-shrink:0;
+    background: linear-gradient(135deg, var(--p400), var(--p300));
+    box-shadow:0 14px 28px rgba(251,111,146,0.35), inset 0 1px 0 rgba(255,255,255,0.5);
+    opacity:0;
+    animation: fadeUp .9s ease .05s forwards;
+  }
+  .type-cursor{
+    display:inline-block;
+    width:3px;
+    height:0.85em;
+    background: var(--p400);
+    margin-inline-start:2px;
+    vertical-align:-0.1em;
+    animation: caret 0.9s step-end infinite;
+  }
+  @keyframes caret{ 50%{ opacity:0; } }
+
+  h1.title{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size: clamp(2.1rem, 6vw, 3.8rem);
+    line-height:1.1;
+    color: var(--ink);
+    opacity:0;
+    animation: fadeUp .9s ease .12s forwards;
+    letter-spacing:-0.5px;
+  }
+  h1.title .accent{
+    background: linear-gradient(120deg, var(--p400), var(--p300));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .subtitle{
+    font-size: clamp(0.9rem, 1.6vw, 1.02rem);
+    color: var(--ink-soft);
+    max-width:480px;
+    line-height:1.8;
+    opacity:0;
+    animation: fadeUp .9s ease .26s forwards;
+  }
+
+  .hero-cta{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+    opacity:0;
+    animation: fadeUp .9s ease .4s forwards;
+  }
+
+  @keyframes fadeUp{
+    from{ opacity:0; transform: translateY(22px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  /* بطاقة كود بسيطة واحترافية */
+  .editor{
+    margin:14px auto 0;
+    max-width:600px;
+    width:100%;
+    border-radius:20px;
+    overflow:hidden;
+    background: rgba(51,19,31,0.92);
+    box-shadow: 0 30px 70px rgba(51,19,31,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
+    opacity:0;
+    animation: fadeUp 1s ease .52s forwards;
+    text-align:right;
+  }
+  .editor-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 18px;
+    background: rgba(255,255,255,0.05);
+  }
+  .editor-bar span{ width:11px;height:11px;border-radius:50%; }
+  .editor-bar span:nth-child(1){background:var(--p400);}
+  .editor-bar span:nth-child(2){background:var(--p200);}
+  .editor-bar span:nth-child(3){background:var(--p50);}
+  .editor-bar .fname{
+    margin-right:auto;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.75rem;
+    color:rgba(255,229,236,0.45);
+  }
+  .editor pre{
+    padding:24px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.88rem;
+    color:#ffe5ec;
+    direction:ltr;
+    text-align:left;
+    line-height:1.85;
+    overflow-x:auto;
+  }
+  .editor .c-key{ color: var(--p300); }
+  .editor .c-str{ color: var(--p100); }
+  .editor .c-com{ color: #a97e8c; }
+
+  /* ===================== عناوين الأقسام ===================== */
+  .section-eyebrow{
+    display:block;
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+    letter-spacing:1px;
+    color: var(--p400);
+    margin-bottom:10px;
+  }
+  .section-title{
+    text-align:center;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: clamp(1.4rem, 3.4vw, 1.9rem);
+    margin-bottom:12px;
+    color: var(--ink);
+  }
+  .section-sub{
+    text-align:center;
+    color: var(--ink-soft);
+    max-width:460px;
+    margin:0 auto 40px;
+    font-size:0.9rem;
+    line-height:1.8;
+  }
+
+  .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in{ opacity:1; transform: translateY(0); }
+
+  /* ===================== نبذة ===================== */
+  .about{ padding:110px 6% 40px; max-width:1100px; margin:0 auto; }
+  .about-card{
+    border-radius:26px;
+    padding: clamp(24px, 3.5vw, 40px);
+    line-height:1.95;
+    font-size:0.94rem;
+    color: var(--ink);
+    max-width:720px;
+    margin:0 auto;
+  }
+  .about-card strong{ color: var(--p400); }
+
+  /* ===================== المهارات ===================== */
+  .skills{ padding:70px 6%; max-width:1100px; margin:0 auto; }
+  .skills-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    max-width:760px;
+    margin:0 auto;
+  }
+  .skill-pill{
+    padding:11px 22px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.86rem;
+    color: var(--ink);
+    transition: transform .3s, background .3s;
+  }
+  .skill-pill:hover{
+    transform: translateY(-4px);
+    background: var(--glass-bg-strong);
+    color: var(--p400);
+  }
+
+  /* ===================== أسعار VPS ===================== */
+  .pricing{ padding:70px 6%; max-width:960px; margin:0 auto; text-align:center; }
+
+  .duration-switch{
+    display:inline-flex;
+    gap:6px;
+    padding:6px;
+    border-radius:999px;
+    margin-bottom:34px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .dur-btn{
+    border:none;
+    background:transparent;
+    color: var(--ink-soft);
+    font-family:'Tajawal', sans-serif;
+    font-weight:700;
+    font-size:0.84rem;
+    padding:9px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    transition: background .3s, color .3s, transform .3s;
+  }
+  .dur-btn.active{
+    background: linear-gradient(135deg, var(--p400), var(--p300));
+    color:#fff;
+    box-shadow: 0 8px 18px rgba(251,111,146,0.35);
+  }
+  .dur-btn:not(.active):hover{ background: rgba(255,255,255,0.4); }
+
+  .pricing-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+    gap:14px;
+    max-width:820px;
+    margin:0 auto;
+  }
+  .price-card{
+    padding:22px 14px;
+    border-radius:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    position:relative;
+    overflow:hidden;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .price-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(251,111,146,0.24), 0 0 26px rgba(251,111,146,0.3), 0 0 0 1px rgba(255,255,255,0.5);
+  }
+  .price-card.popular{
+    box-shadow: 0 0 0 2px rgba(251,111,146,0.55), 0 18px 32px rgba(251,111,146,0.22);
+  }
+  .price-card.popular:hover{
+    box-shadow: 0 0 0 2px rgba(251,111,146,0.65), 0 18px 36px rgba(251,111,146,0.3), 0 0 26px rgba(251,111,146,0.3);
+  }
+  .popular-badge{
+    position:absolute;
+    top:-11px;
+    left:50%;
+    transform:translateX(-50%);
+    background:linear-gradient(135deg, var(--p400), var(--p300));
+    color:#fff;
+    font-size:0.66rem;
+    font-weight:800;
+    padding:4px 12px;
+    border-radius:999px;
+    box-shadow:0 6px 14px rgba(251,111,146,0.4);
+    white-space:nowrap;
+    z-index:2;
+  }
+  .price-spec{
+    font-size:0.78rem;
+    color: var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+    direction:ltr;
+  }
+  .price-tag{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.5rem;
+    color: var(--p400);
+    transition: opacity .2s;
+  }
+  .price-tag span{
+    font-size:0.7rem;
+    font-weight:500;
+    color: var(--ink-faint);
+  }
+  .price-more{
+    font-size:0.85rem;
+    color: var(--ink-soft);
+    margin:26px 0 18px;
+  }
+
+
+  /* لمعان يمر فوق البطاقات عند مرور المؤشر */
+  .price-card::after, .contact-card::after, .faq-item::after{
+    content:'';
+    position:absolute;
+    inset:-50%;
+    background:linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.55) 50%, transparent 65%);
+    transform:translateX(-60%);
+    opacity:0;
+    pointer-events:none;
+  }
+  .price-card:hover::after, .contact-card:hover::after, .faq-item:hover::after{
+    opacity:1;
+    animation: card-shine 1s ease forwards;
+  }
+  @keyframes card-shine{
+    from{ transform:translateX(-60%); }
+    to{ transform:translateX(60%); }
+  }
+  .faq-item{ position:relative; overflow:hidden; }
+
+  /* فاصل خفيف بديل عن الموجة بين بعض الأقسام */
+  .section-divider{
+    width:min(80%,600px);
+    height:1px;
+    margin:0 auto;
+    background: linear-gradient(90deg, transparent, rgba(251,111,146,0.35), transparent);
+  }
+
+  /* ===================== خطوات الطلب ===================== */
+  .steps{ padding:70px 6%; max-width:1000px; margin:0 auto; text-align:center; }
+  .steps-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap:16px;
+    max-width:820px;
+    margin:0 auto;
+  }
+  .step-card{
+    border-radius:22px;
+    padding:28px 20px;
+    text-align:right;
+    position:relative;
+  }
+  .step-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    color: var(--p400);
+    display:block;
+    margin-bottom:10px;
+  }
+  .step-card h3{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.05rem;
+    margin-bottom:6px;
+  }
+  .step-card p{
+    font-size:0.85rem;
+    color: var(--ink-soft);
+    line-height:1.7;
+  }
+
+  /* ===================== الأسئلة الشائعة ===================== */
+  .faq{ padding:70px 6% 40px; max-width:820px; margin:0 auto; }
+  .faq-list{ display:flex; flex-direction:column; gap:12px; }
+  .faq-item{
+    border-radius:18px;
+    padding:18px 22px;
+    cursor:pointer;
+  }
+  .faq-item summary{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.96rem;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::after{
+    content:'+';
+    font-size:1.3rem;
+    color: var(--p400);
+    transition: transform .3s;
+    margin-inline-start:10px;
+  }
+  .faq-item[open] summary::after{ transform: rotate(45deg); }
+  .faq-item p{
+    margin-top:12px;
+    font-size:0.86rem;
+    color: var(--ink-soft);
+    line-height:1.8;
+  }
+
+  /* ===================== التواصل ===================== */
+  .contact{ padding:90px 6% 40px; max-width:1000px; margin:0 auto; text-align:center; }
+  .contact-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap:20px;
+    max-width:720px;
+    margin:0 auto;
+  }
+  .contact-card{
+    border-radius:24px;
+    padding:36px 26px;
+    text-decoration:none;
+    color: var(--ink);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    position:relative;
+    overflow:hidden;
+    transition: transform .35s, box-shadow .35s;
+  }
+  .contact-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 22px 45px rgba(251,111,146,0.28), 0 0 28px rgba(251,111,146,0.3);
+  }
+  .contact-icon{
+    width:52px;height:52px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background: linear-gradient(135deg, var(--p400), var(--p300));
+    color:#fff;
+  }
+  .contact-icon svg{ width:22px; height:22px; }
+  .contact-card h3{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.15rem;
+  }
+  .contact-card p{
+    color: var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.92rem;
+    direction:ltr;
+  }
+
+  footer{
+    text-align:center;
+    padding:56px 6% 34px;
+    color: var(--ink-faint);
+  }
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    max-width:900px;
+    margin:0 auto 26px;
+    padding-bottom:26px;
+    border-bottom:1px solid rgba(122,75,88,0.15);
+    text-align:right;
+  }
+  .footer-brand{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:1.05rem;
+    color: var(--ink);
+  }
+  .footer-brand em{ color: var(--p400); font-style:normal; }
+  .footer-links, .footer-social{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    font-size:0.85rem;
+  }
+  .footer-links a, .footer-social a{
+    color: var(--ink-soft);
+    text-decoration:none;
+    transition: color .3s;
+  }
+  .footer-links a:hover, .footer-social a:hover{ color: var(--p400); }
+  .footer-social a{ direction:ltr; }
+  .footer-bottom{ font-size:0.82rem; }
+  footer .heart{ color: var(--p400); }
+
+  /* ===================== الاستجابة لكل الأجهزة ===================== */
+
+  /* أجهزة آيباد وسطية: تصغير بسيط بدون كسر التخطيط */
+  @media (max-width: 1024px){
+    .nav{ max-width:820px; }
+    .about, .skills, .pricing, .steps, .faq, .contact{ max-width:900px; }
+  }
+
+  /* الهواتف والآيباد بالوضع الرأسي */
+  @media (max-width: 720px){
+    .nav-links{
+      position:fixed;
+      top:82px; left:5%; right:5%;
+      flex-direction:column;
+      align-items:stretch;
+      padding:14px;
+      border-radius:24px;
+      background: var(--glass-bg-strong);
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(14px) saturate(160%);
+      box-shadow: var(--glass-shadow);
+      display:none;
+      gap:6px;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links a{ text-align:center; padding:12px; }
+    .menu-toggle{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;height:40px;
+      border-radius:50%;
+      background: var(--glass-bg);
+      border:1px solid var(--glass-border);
+      font-size:1.1rem;
+      color: var(--ink);
+      cursor:pointer;
+    }
+    .pricing-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 721px){
+    .menu-toggle{ display:none; }
+  }
+
+  /* هواتف صغيرة جدًا */
+  @media (max-width:420px){
+    .hero{ padding-top:120px; }
+    .btn{ padding:14px 26px; font-size:0.9rem; }
+    .editor pre{ padding:18px; font-size:0.78rem; }
+    .pricing-grid{ grid-template-columns: repeat(2, 1fr); gap:10px; }
+    .price-card{ padding:16px 10px; }
+  }
+  @media (max-width:340px){
+    .pricing-grid{ grid-template-columns: 1fr 1fr; }
+  }
+  /* تخفيف تكلفة التمويه (blur) على معالجات الهواتف الأضعف: نفس المظهر تقريبًا بتكلفة أقل */
+  @media (max-width:720px){
+    .aurora span{ filter: blur(26px); }
+    .liquid{ backdrop-filter: blur(9px) saturate(150%); -webkit-backdrop-filter: blur(9px) saturate(150%); }
+  }
+  @media (max-width:600px){
+    .footer-inner{ flex-direction:column; text-align:center; }
+    .footer-links, .footer-social{ justify-content:center; }
+    .step-card{ text-align:center; }
+  }
+
+  /* شاشات اللابتوب والديسكتوب الكبيرة: يبقى المحتوى محصورًا ومتمركزًا */
+  @media (min-width: 1440px){
+    .hero{ max-width:1400px; margin:0 auto; }
+  }
+
+  /* دعم مساحات الحواف الآمنة (الأجهزة ذات الشق العلوي) */
+  .nav-wrap{
+    padding-top: env(safe-area-inset-top);
+  }
+  footer{
+    padding-bottom: max(34px, env(safe-area-inset-bottom));
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  :focus-visible{ outline:2px solid var(--p400); outline-offset:3px; }
+
+  /* ===================== إضافات تجميلية ===================== */
+
+  /* --- Cursor مخصص (ديسكتوب فقط) --- */
+  @media (hover:hover) and (pointer:fine){
+    body.has-custom-cursor{ cursor:none; }
+    body.has-custom-cursor a, body.has-custom-cursor button, body.has-custom-cursor .liquid{ cursor:none; }
+    .cursor-dot{
+      position:fixed;
+      top:0; left:0;
+      width:16px; height:16px;
+      margin:-8px 0 0 -8px;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(251,111,146,0.9), rgba(255,143,171,0.35));
+      pointer-events:none;
+      z-index:9999;
+      will-change: transform;
+      transform: translate3d(-100px,-100px,0) scale(1);
+      transition: transform .12s ease, opacity .3s ease;
+      opacity:0;
+    }
+    .cursor-dot.active{ opacity:1; }
+    .cursor-dot.press{ transform-origin:center; }
+  }
+
+  /* --- Shimmer لامع على الأزرار الأساسية --- */
+  .btn-primary{ position:relative; overflow:hidden; }
+  .btn-primary::after{
+    content:'';
+    position:absolute;
+    top:0; bottom:0;
+    right:-60%;
+    width:45%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform: skewX(-18deg);
+    animation: shimmer 4.5s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes shimmer{
+    0%{ right:-60%; opacity:0; }
+    8%{ opacity:1; }
+    35%{ right:120%; opacity:0; }
+    100%{ right:120%; opacity:0; }
+  }
+
+  /* --- تكبير + دوران بسيط للأيقونات عند hover --- */
+  .contact-icon{ transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+  .contact-card:hover .contact-icon{ transform: scale(1.15) rotate(8deg); }
+
+  /* --- خط متدرج إضافي على كلمات مفتاحية --- */
+  .grad-word{
+    background: linear-gradient(120deg, var(--p400), var(--p300));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* --- ظل نصي على العنوان الرئيسي --- */
+  h1.title{ text-shadow: 0 6px 24px rgba(251,111,146,0.22); }
+
+  /* --- فواصل موجة بين الأقسام --- */
+  .wave-divider{
+    width:100%;
+    height:44px;
+    margin-top:-1px;
+    pointer-events:none;
+    contain: strict;
+  }
+  .wave-divider svg{ width:100%; height:100%; display:block; }
+  .wave-divider path{ fill: rgba(255,255,255,0.35); }
+
+  /* --- Particles وردية خفيفة --- */
+  .particles{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+    contain: strict;
+  }
+  .particles span{
+    position:absolute;
+    bottom:-10px;
+    width:4px; height:4px;
+    border-radius:50%;
+    background: var(--p300);
+    opacity:0.55;
+    will-change: transform;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    0%{ transform: translate3d(0,0,0); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.4; }
+    100%{ transform: translate3d(0,-110vh,0); opacity:0; }
+  }
+
+  /* --- توقيع مائي خفيف جدًا بالخلفية --- */
+  .watermark{
+    position:fixed;
+    z-index:0;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+    contain: strict;
+  }
+  .watermark span{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:min(46vw,520px);
+    color: rgba(251,111,146,0.05);
+    -webkit-user-select:none; user-select:none;
+    line-height:1;
+  }
+
+  /* --- تدرج متحرك بحواف الصفحة عند التمرير --- */
+  .edge-glow{
+    position:fixed;
+    inset:0;
+    z-index:60;
+    pointer-events:none;
+    opacity:0;
+    transition: opacity .6s ease;
+    box-shadow: inset 0 0 0 2px transparent;
+  }
+  body.scrolled .edge-glow{
+    opacity:1;
+    animation: edgeGradient 8s linear infinite;
+  }
+  @keyframes edgeGradient{
+    0%{ box-shadow: inset 0 0 22px 0 rgba(251,111,146,0.16); }
+    50%{ box-shadow: inset 0 0 22px 0 rgba(255,143,171,0.28); }
+    100%{ box-shadow: inset 0 0 22px 0 rgba(251,111,146,0.16); }
+  }
+
+  /* --- Magnetic button --- */
+  .magnetic{ will-change: transform; }
+
+  /* --- Skeleton loading أول ما تفتح الصفحة --- */
+  #preloader{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    background: linear-gradient(160deg, var(--p50) 0%, var(--p100) 55%, var(--p200) 100%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    transition: opacity .4s ease, visibility .4s ease;
+  }
+  #preloader.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+  .skel{
+    border-radius:14px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.25) 25%, rgba(255,255,255,0.55) 37%, rgba(255,255,255,0.25) 63%);
+    background-size:400% 100%;
+    animation: skel-shimmer 1.4s ease-in-out infinite;
+  }
+  .skel-title{ width:min(60vw,320px); height:26px; }
+  .skel-line{ width:min(46vw,220px); height:14px; }
+  @keyframes skel-shimmer{
+    0%{ background-position:100% 0; }
+    100%{ background-position:0 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .particles, .cursor-dot, .btn-primary::after{ display:none; }
+  }
+
+  /* ===================== إضافات احترافية ===================== */
+
+  /* تحديد النص بلون الهوية بدل الأزرق الافتراضي */
+  ::selection{ background: var(--p400); color:#fff; }
+
+  /* شريط تمرير مخصص (المتصفحات المبنية على Webkit/Blink) */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background: var(--p50); }
+  ::-webkit-scrollbar-thumb{ background: var(--p300); border-radius:999px; border:2px solid var(--p50); }
+  ::-webkit-scrollbar-thumb:hover{ background: var(--p400); }
+
+  /* حالة تركيز واضحة لكل عنصر تفاعلي عند التنقل بلوحة المفاتيح */
+  a:focus-visible, button:focus-visible, summary:focus-visible, .liquid:focus-visible{
+    outline: 2px solid var(--p400);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  /* شريط تقدّم القراءة أعلى الصفحة */
+  .scroll-progress{
+    position:fixed;
+    top:0; right:0; left:0;
+    height:3px;
+    z-index:60;
+    background: linear-gradient(90deg, var(--p400), var(--p300), var(--p200));
+    transform-origin: right; /* تنطلق من اليمين لأن الاتجاه RTL */
+    transform: scaleX(0);
+    will-change: transform;
+    pointer-events:none;
+  }
+
+  /* زر تواصل عائم (اختصار سريع للمراسلة، يظهر بعد أول تمرير) */
+  .float-cta{
+    position:fixed;
+    left:22px;
+    bottom:22px;
+    z-index:55;
+    width:56px;
+    height:56px;
+    padding:0;
+    opacity:0;
+    transform: translateY(14px) scale(0.9);
+    pointer-events:none;
+    transition: opacity .35s ease, transform .35s ease, box-shadow .35s;
+  }
+  .float-cta svg{ width:24px; height:24px; }
+  body.scrolled .float-cta{
+    opacity:1;
+    transform: translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .float-cta:hover{ transform: translateY(-4px) scale(1.04); }
+
+  /* إيقاف الحركات الزخرفية عند تصغير التبويب أو تركه بالخلفية (توفير معالج وبطارية) */
+  body.tab-hidden .aurora span,
+  body.tab-hidden .particles span,
+  body.tab-hidden .btn-primary::after,
+  body.tab-hidden .btn-primary,
+  body.tab-hidden .eyebrow .dot{
+    animation-play-state: paused;
+  }
+
+  @media print{
+    .aurora, .noise, .particles, .cursor-dot, .nav-wrap, .float-cta, .scroll-progress, #preloader{ display:none !important; }
+    body{ background:#fff; color:#000; }
+    .liquid{ box-shadow:none; border:1px solid #ccc; backdrop-filter:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<a class="liquid btn-primary float-cta" href="https://t.me/K01q1" target="_blank" rel="noopener" aria-label="تواصل مع المطور @K01q1">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5 2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.5 0 .7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.2-.4-1.7-1.6-1.3zM8.3 14.1l9.6-6.1c.5-.3.9-.1.5.2l-8.1 7.5-.3 3.2-1.4-4.4z"/></svg>
+</a>
+
+<div id="preloader">
+  <div class="skel skel-title"></div>
+  <div class="skel skel-line"></div>
+  <div class="skel skel-line" style="width:min(30vw,140px)"></div>
+</div>
+
+<div class="watermark"><span>Y</span></div>
+<div class="particles" id="particles"></div>
+<div class="edge-glow"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<div class="aurora"><span></span><span></span><span></span></div>
+<div class="noise"></div>
+
+<div class="nav-wrap">
+  <nav class="nav liquid">
+    <div class="brand">يوسف<em>.dev</em></div>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">نبذة</a>
+      <a href="#skills">الخدمات</a>
+      <a href="#pricing">الأسعار</a>
+      <a href="#faq">الأسئلة</a>
+      <a href="#contact">تواصل</a>
+    </div>
+    <a href="https://telegram.me/iq_yussef" target="_blank" rel="noopener" class="liquid btn-primary nav-cta" style="display:none" id="navCtaDesktop">راسلني</a>
+    <button type="button" class="menu-toggle liquid" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="navLinks">☰</button>
+  </nav>
+</div>
+
+<section class="hero">
+  <div class="eyebrow liquid"><span class="dot"></span> جاهز لاستقبال مشروعك القادم</div>
+
+  <div class="hero-identity">
+    <div class="hero-avatar" aria-hidden="true">ي</div>
+    <h1 class="title"><span id="typeText">أهلاً، أنا </span><span class="accent" id="typeAccent">يوسف</span><span class="type-cursor" aria-hidden="true"></span></h1>
+  </div>
+  <p class="subtitle">أبرمج مواقع، أدوات، بوتات، وسكربات — وأوفّر سيرفرات VPS.</p>
+
+  <div class="hero-cta">
+    <a class="liquid btn btn-primary magnetic" href="https://telegram.me/iq_yussef" target="_blank" rel="noopener">قناتي على تليكرام</a>
+    <a class="liquid btn btn-ghost magnetic" href="https://telegram.me/iq_yussef" target="_blank" rel="noopener">تواصل معي مباشرة</a>
+  </div>
+
+  <div class="editor">
+    <div class="editor-bar">
+      <span></span><span></span><span></span>
+      <span class="fname">profile.js</span>
+    </div>
+    <pre><span class="c-key">const</span> developer = {
+  <span class="c-key">name</span>: <span class="c-str">"يوسف"</span>,
+  <span class="c-key">role</span>: <span class="c-str">"Software Developer"</span>,
+  <span class="c-key">focus</span>: <span class="c-str">"واجهات نظيفة، وكود موثوق"</span>,
+  <span class="c-key">status</span>: <span class="c-str">"available"</span><span class="c-com"> // جاهز لمشروعك القادم</span>
+};</pre>
+  </div>
+</section>
+
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,22 C150,44 350,0 600,18 C850,36 1050,4 1200,22 L1200,44 L0,44 Z"></path></svg></div>
+
+<section class="about" id="about">
+  <span class="section-eyebrow">// من أنا</span>
+  <h2 class="section-title">نبذة عني</h2>
+  <div class="about-card liquid reveal">
+    مبرمج أهتم بـ <strong>البساطة والجودة</strong> في كل مشروع. أبني حلولًا رقمية تشتغل بسلاسة، وأشارك خبرتي عبر قناتي بشكل مستمر.
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <span class="section-eyebrow">// خدماتي</span>
+  <h2 class="section-title">ماذا <span class="grad-word">أقدّم</span></h2>
+  <div class="skills-row">
+    <div class="skill-pill liquid reveal">مواقع</div>
+    <div class="skill-pill liquid reveal">أدوات</div>
+    <div class="skill-pill liquid reveal">بوتات</div>
+    <div class="skill-pill liquid reveal">سكربات</div>
+  </div>
+</section>
+
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,22 C150,4 350,40 600,20 C850,0 1050,36 1200,18 L1200,44 L0,44 Z"></path></svg></div>
+
+<section class="pricing" id="pricing">
+  <span class="section-eyebrow">// VPS · RDP</span>
+  <h2 class="section-title">أسعار <span class="grad-word">السيرفرات</span></h2>
+  <p class="section-sub">اختر المدة، والسعر يتحدّث تلقائيًا لكل الباقات</p>
+
+  <div class="duration-switch liquid" role="group" aria-label="مدة الاشتراك">
+    <button class="dur-btn liquid active" data-multiplier="1">شهر</button>
+    <button class="dur-btn liquid" data-multiplier="3">3 أشهر</button>
+    <button class="dur-btn liquid" data-multiplier="6">6 أشهر</button>
+    <button class="dur-btn liquid" data-multiplier="12">سنة</button>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card liquid reveal">
+      <div class="price-spec">4GB RAM · 2 CPU</div>
+      <div class="price-tag" data-base="8">8$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">4GB RAM · 4 CPU</div>
+      <div class="price-tag" data-base="9">9$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">8GB RAM · 4 CPU</div>
+      <div class="price-tag" data-base="14">14$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal popular">
+      <span class="popular-badge">الأكثر طلبًا</span>
+      <div class="price-spec">8GB RAM · 8 CPU</div>
+      <div class="price-tag" data-base="16">16$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">16GB RAM · 8 CPU</div>
+      <div class="price-tag" data-base="23">23$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">32GB RAM · 16 CPU</div>
+      <div class="price-tag" data-base="28">28$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">32GB RAM · 32 CPU</div>
+      <div class="price-tag" data-base="35">35$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">64GB RAM · 32 CPU</div>
+      <div class="price-tag" data-base="55">55$<span>/شهر</span></div>
+    </div>
+    <div class="price-card liquid reveal">
+      <div class="price-spec">64GB RAM · 64 CPU</div>
+      <div class="price-tag" data-base="68">68$<span>/شهر</span></div>
+    </div>
+  </div>
+  <p class="price-more">تفاصيل أكثر متوفرة عبر التواصل المباشر</p>
+  <a class="liquid btn btn-primary magnetic reveal" href="https://telegram.me/iq_yussef" target="_blank" rel="noopener">اطلب سيرفرك الآن</a>
+</section>
+
+<section class="steps" id="steps">
+  <span class="section-eyebrow">// طريقة الطلب</span>
+  <h2 class="section-title">كيف تطلب</h2>
+  <div class="steps-row">
+    <div class="step-card liquid reveal">
+      <span class="step-num">01</span>
+      <h3>راسلني</h3>
+      <p>تواصل عبر تليكرام وحدد المواصفات اللي تحتاجها</p>
+    </div>
+    <div class="step-card liquid reveal">
+      <span class="step-num">02</span>
+      <h3>الدفع والتجهيز</h3>
+      <p>تأكيد الباقة والمدة، وتجهيز السيرفر خلال وقت قصير</p>
+    </div>
+    <div class="step-card liquid reveal">
+      <span class="step-num">03</span>
+      <h3>استلام فوري</h3>
+      <p>تستلم بيانات الدخول جاهزة للاستخدام مباشرة</p>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,24 C180,44 380,4 600,20 C820,36 1020,2 1200,24 L1200,44 L0,44 Z"></path></svg></div>
+
+<section class="faq" id="faq">
+  <span class="section-eyebrow">// أسئلة شائعة</span>
+  <h2 class="section-title">قبل ما تسأل</h2>
+  <div class="faq-list">
+    <details class="faq-item liquid reveal">
+      <summary>وش الفرق بين VPS و RDP؟</summary>
+      <p>الفرق بطريقة الوصول والاستخدام، وأساعدك تختار الأنسب لمشروعك عند التواصل.</p>
+    </details>
+    <details class="faq-item liquid reveal">
+      <summary>هل فيه ضمان بعد الطلب؟</summary>
+      <p>نعم، فيه متابعة ودعم بعد التسليم لأي استفسار أو مشكلة تقنية.</p>
+    </details>
+    <details class="faq-item liquid reveal">
+      <summary>كم مدة تجهيز السيرفر؟</summary>
+      <p>عادة خلال وقت قصير جدًا بعد تأكيد الطلب والدفع.</p>
+    </details>
+    <details class="faq-item liquid reveal">
+      <summary>أقدر أطلب برمجة موقع أو بوت مخصص؟</summary>
+      <p>أكيد، راسلني وشرح فكرتك وأعطيك تفاصيل التنفيذ والسعر.</p>
+    </details>
+  </div>
+</section>
+
+<div class="wave-divider" aria-hidden="true"><svg viewBox="0 0 1200 44" preserveAspectRatio="none"><path d="M0,18 C150,40 350,4 600,22 C850,40 1050,4 1200,20 L1200,44 L0,44 Z"></path></svg></div>
+
+<section class="contact" id="contact">
+  <span class="section-eyebrow">// تواصل</span>
+  <h2 class="section-title">لنبنِ شيئًا معًا</h2>
+  <p class="section-sub">تابع قناتي لأحدث المحتوى البرمجي، أو راسلني مباشرة لأي استفسار أو تعاون</p>
+  <div class="contact-grid">
+    <a class="contact-card liquid reveal" href="https://telegram.me/iq_yussef" target="_blank" rel="noopener">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5 2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.5 0 .7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.2-.4-1.7-1.6-1.3zM8.3 14.1l9.6-6.1c.5-.3.9-.1.5.2l-8.1 7.5-.3 3.2-1.4-4.4z"/></svg>
+      </div>
+      <h3>القناة</h3>
+      <p>@iq_yussef</p>
+    </a>
+    <a class="contact-card liquid reveal" href="https://t.me/K01q1" target="_blank" rel="noopener">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5 2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.5 0 .7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.7-.8l3.1-14.5c.3-1.2-.4-1.7-1.6-1.3zM8.3 14.1l9.6-6.1c.5-.3.9-.1.5.2l-8.1 7.5-.3 3.2-1.4-4.4z"/></svg>
+      </div>
+      <h3>تواصل شخصي</h3>
+      <p>@K01q1</p>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">يوسف<em>.dev</em></div>
+    <div class="footer-links">
+      <a href="#about">نبذة</a>
+      <a href="#skills">الخدمات</a>
+      <a href="#pricing">الأسعار</a>
+      <a href="#faq">الأسئلة</a>
+      <a href="#contact">تواصل</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://telegram.me/iq_yussef" target="_blank" rel="noopener">القناة @iq_yussef</a>
+      <a href="https://t.me/K01q1" target="_blank" rel="noopener">تواصل @K01q1</a>
+    </div>
+  </div>
+  <p class="footer-bottom">صُنع بعناية <span class="heart">♥</span> — يوسف © 2026 — جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+  // تبديل قائمة الجوال
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if(menuToggle && navLinks){
+    menuToggle.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinks.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.addEventListener('click', (e)=>{
+      if(navLinks.classList.contains('open') && !navLinks.contains(e.target) && e.target !== menuToggle){
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && navLinks.classList.contains('open')){
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // مبدّل مدة الاشتراك: يضاعف كل سعر حسب المدة المختارة
+  const durBtns = document.querySelectorAll('.dur-btn');
+  const priceTags = document.querySelectorAll('.price-tag');
+  const durLabels = { 1:'/شهر', 3:'/3 أشهر', 6:'/6 أشهر', 12:'/سنة' };
+
+  function applyDuration(mult){
+    priceTags.forEach(tag=>{
+      const base = parseFloat(tag.dataset.base);
+      const total = Math.round(base * mult);
+      tag.textContent = '';
+      tag.append(total + '$');
+      const span = document.createElement('span');
+      span.textContent = durLabels[mult];
+      tag.appendChild(span);
+    });
+  }
+
+  durBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(btn.classList.contains('active')) return;
+      durBtns.forEach(b=> b.classList.remove('active'));
+      btn.classList.add('active');
+      applyDuration(parseInt(btn.dataset.multiplier, 10));
+    });
+  });
+
+  // ظهور تدريجي عند التمرير (مراقب واحد لكل العناصر لتقليل التكلفة)
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          const tag = entry.target.querySelector('.price-tag');
+          if(tag && !tag.dataset.counted){
+            tag.dataset.counted = '1';
+            animatePriceTag(tag);
+          }
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach((el,i)=>{
+      el.style.transitionDelay = (i%6)*0.06 + 's';
+      io.observe(el);
+    });
+  } else {
+    revealEls.forEach(el=> el.classList.add('in'));
+  }
+
+  // ===================== إضافات تجميلية: أداء أولاً =====================
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  // إيقاف الرسوم المتحركة الزخرفية عند تصفّح تبويب آخر أو تصغير النافذة
+  document.addEventListener('visibilitychange', ()=>{
+    document.body.classList.toggle('tab-hidden', document.hidden);
+  }, { passive:true });
+
+  // تأثير كتابة على عنوان الترحيب بالهيرو
+  function typeHero(){
+    const target = document.getElementById('typeText');
+    const accent = document.getElementById('typeAccent');
+    if(!target || !accent || reduceMotion) return;
+    const full = target.textContent;
+    target.textContent = '';
+    accent.style.opacity = '0';
+    let i = 0;
+    (function step(){
+      if(i <= full.length){
+        target.textContent = full.slice(0, i);
+        i++;
+        setTimeout(step, 45);
+      } else {
+        accent.style.transition = 'opacity .5s ease';
+        accent.style.opacity = '1';
+      }
+    })();
+  }
+  window.addEventListener('load', ()=> setTimeout(typeHero, 550));
+
+  // عدّ تصاعدي لأرقام الأسعار عند ظهورها أول مرة
+  function animatePriceTag(tag){
+    if(reduceMotion) return;
+    const durLabelsLocal = { 1:'/شهر', 3:'/3 أشهر', 6:'/6 أشهر', 12:'/سنة' };
+    const base = parseFloat(tag.dataset.base);
+    const activeBtn = document.querySelector('.dur-btn.active');
+    const mult = activeBtn ? parseInt(activeBtn.dataset.multiplier, 10) : 1;
+    const target = Math.round(base * mult);
+    const label = durLabelsLocal[mult] || '/شهر';
+    const start = performance.now();
+    const dur = 700;
+    function frame(now){
+      const p = Math.min((now-start)/dur, 1);
+      const eased = 1 - Math.pow(1-p, 3);
+      const val = Math.round(target * eased);
+      tag.textContent = '';
+      tag.append(val + '$');
+      const span = document.createElement('span');
+      span.textContent = label;
+      tag.appendChild(span);
+      if(p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Skeleton loading: تختفي بسلاسة خلال ثانية واحدة كحد أقصى
+  const preloader = document.getElementById('preloader');
+  function hidePreloader(){
+    if(!preloader) return;
+    preloader.classList.add('hide');
+    setTimeout(()=> preloader.remove(), 500);
+  }
+  window.addEventListener('load', ()=> setTimeout(hidePreloader, 350));
+  setTimeout(hidePreloader, 1000); // سقف زمني حتى لو تأخر التحميل
+
+  // Particles وردية خفيفة (عدد قليل جدًا، حركة GPU فقط عبر transform)
+  // تُبنى بعد أن يصبح المتصفح خاملًا حتى لا تنافس عرض المحتوى الأساسي والـ LCP
+  function buildParticles(){
+    if(reduceMotion) return;
+    const field = document.getElementById('particles');
+    if(!field) return;
+    const count = window.innerWidth < 720 ? 8 : 14;
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<count;i++){
+      const s = document.createElement('span');
+      const left = Math.random()*100;
+      const dur = 16 + Math.random()*14;
+      const delay = Math.random()*-20;
+      const size = 3 + Math.random()*3;
+      s.style.left = left + '%';
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = delay + 's';
+      frag.appendChild(s);
+    }
+    field.appendChild(frag);
+  }
+  if('requestIdleCallback' in window){
+    requestIdleCallback(buildParticles, { timeout: 2000 });
+  } else {
+    setTimeout(buildParticles, 300);
+  }
+
+  // Cursor مخصص (ديسكتوب فقط) — محدّث عبر requestAnimationFrame لتفادي أي بطء
+  if(finePointer && !reduceMotion){
+    document.body.classList.add('has-custom-cursor');
+    const dot = document.getElementById('cursorDot');
+    let mx = -100, my = -100, cx = -100, cy = -100, raf = null;
+    function loop(){
+      cx += (mx - cx) * 0.35;
+      cy += (my - cy) * 0.35;
+      dot.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+      raf = requestAnimationFrame(loop);
+    }
+    window.addEventListener('mousemove', (e)=>{
+      mx = e.clientX; my = e.clientY;
+      dot.classList.add('active');
+      if(!raf) raf = requestAnimationFrame(loop);
+    }, { passive:true });
+    window.addEventListener('mousedown', ()=> dot.style.transform += ' scale(0.7)', { passive:true });
+    document.addEventListener('mouseleave', ()=> dot.classList.remove('active'));
+  }
+
+  // Magnetic buttons — ينجذب الزر بسيط لمكان الماوس عند الاقتراب
+  if(finePointer && !reduceMotion){
+    document.querySelectorAll('.magnetic').forEach(btn=>{
+      let raf = null, tx = 0, ty = 0;
+      btn.addEventListener('mousemove', (e)=>{
+        const r = btn.getBoundingClientRect();
+        tx = (e.clientX - r.left - r.width/2) * 0.25;
+        ty = (e.clientY - r.top - r.height/2) * 0.25;
+        if(!raf){
+          raf = requestAnimationFrame(()=>{
+            btn.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+            raf = null;
+          });
+        }
+      }, { passive:true });
+      btn.addEventListener('mouseleave', ()=>{
+        btn.style.transform = '';
+      }, { passive:true });
+    });
+  }
+
+  // تدرج الحواف المتحرك يظهر بعد أول تمرير بسيط فقط (تفعيل مرة واحدة، بدون تكلفة مستمرة)
+  let edgeActivated = false;
+  window.addEventListener('scroll', ()=>{
+    if(edgeActivated) return;
+    if(window.scrollY > 80){
+      edgeActivated = true;
+      document.body.classList.add('scrolled');
+    }
+  }, { passive:true });
+
+  // شريط تقدّم القراءة أعلى الصفحة
+  const scrollProgress = document.getElementById('scrollProgress');
+  if(scrollProgress){
+    let ticking = false;
+    function updateProgress(){
+      const h = document.documentElement;
+      const scrolled = h.scrollTop;
+      const max = h.scrollHeight - h.clientHeight;
+      const ratio = max > 0 ? scrolled / max : 0;
+      scrollProgress.style.transform = `scaleX(${ratio})`;
+      ticking = false;
+    }
+    window.addEventListener('scroll', ()=>{
+      if(!ticking){
+        requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    }, { passive:true });
+    updateProgress();
+  }
+</script>
+
+</body>
+</html>
