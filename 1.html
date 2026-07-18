@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050308;
+    --bg-soft:#0b0714;
+    --card:#110a1f;
+    --card-2:#180f2c;
+    --line:#221739;
+    --purple:#7c3aed;
+    --purple-2:#9333ea;
+    --purple-glow:#b388ff;
+    --text:#f1eefb;
+    --muted:#948aac;
+    --danger:#ef4444;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:#050308;
+    background-image:
+      radial-gradient(ellipse 700px 500px at 78% 10%, rgba(130,60,220,.20), transparent 60%),
+      radial-gradient(ellipse 500px 400px at 10% 30%, rgba(90,30,160,.12), transparent 60%);
+    color:var(--text);
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  ::selection{background:var(--purple);color:#fff;}
+  [dir="rtl"] body,[dir="rtl"]{font-family:'Tajawal',sans-serif;}
+
+  .page{display:none;animation:fadeUp .3s ease both;}
+  .page.active{display:block;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  .container{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(5,3,8,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .header-in{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1120px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;cursor:pointer;}
+  .logo .mark{width:40px;height:40px;filter:drop-shadow(0 0 8px rgba(179,136,255,.6));}
+  nav.desktop-nav{display:flex;gap:30px;font-weight:500;color:#c9c1de;font-size:.95rem}
+  nav.desktop-nav a{padding:6px 2px;border-bottom:2px solid transparent;transition:.2s}
+  nav.desktop-nav a.active,nav.desktop-nav a:hover{color:var(--purple-glow);border-color:var(--purple-2)}
+  .header-actions{display:flex;gap:8px;align-items:center}
+  .icon-btn{width:40px;height:40px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;color:var(--text);border:1px solid var(--line);font-size:.85rem;font-weight:700;transition:.2s;}
+  .icon-btn:hover{border-color:var(--purple-2);color:var(--purple-glow);}
+  .icon-btn.primary{background:linear-gradient(145deg,var(--purple-2),var(--purple));border:none;color:#fff;}
+  .icon-btn.primary:hover{opacity:.9;}
+  .lang-btn{padding:0 12px;width:auto;font-size:.78rem;letter-spacing:.5px;font-weight:700;}
+  .menu-toggle{display:none}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;font-weight:600;font-size:.95rem;transition:.2s;}
+  .btn-primary{background:linear-gradient(135deg,var(--purple-2),var(--purple));color:#fff;box-shadow:0 8px 26px rgba(147,51,234,.4)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(147,51,234,.55)}
+  .btn-outline{background:#0d0916;border:1px solid var(--line);color:var(--text)}
+  .btn-outline:hover{border-color:var(--purple-2)}
+  .btn-danger{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.35)}
+  .btn-success{background:rgba(34,197,94,.12);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+  .btn-sm{padding:8px 14px;font-size:.82rem;border-radius:9px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:76px 0 46px;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center}
+  .eyebrow{color:#dcd6ea;font-weight:400;font-size:1.9rem}
+  .hero h1{font-size:3.2rem;font-weight:800;line-height:1.15;margin-top:2px;
+    background:linear-gradient(90deg,#a855f7,#c084fc 60%,#7c3aed);
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{color:var(--muted);margin:20px 0 28px;font-size:1.05rem;max-width:480px;line-height:1.7}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+
+  .hero-visual{position:relative;height:400px;display:flex;align-items:center;justify-content:center;}
+  .nebula{position:absolute;inset:-40px;background:radial-gradient(circle at 50% 40%,rgba(168,85,247,.28),transparent 60%);filter:blur(20px);}
+  .shield-wrap{position:relative;display:flex;flex-direction:column;align-items:center;animation:float 6s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .shield-wrap svg{filter:drop-shadow(0 0 26px rgba(168,85,247,.55));}
+  .pedestal{width:230px;height:26px;margin-top:8px;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(168,85,247,.9),rgba(124,58,237,.15) 70%,transparent 75%);
+    box-shadow:0 0 40px 10px rgba(147,51,234,.55);position:relative;}
+  .pedestal::before{content:'';position:absolute;left:50%;top:-30px;width:2px;height:30px;background:linear-gradient(180deg,transparent,var(--purple-glow));transform:translateX(-50%);}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:10px 0 54px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0}
+  .stat-card{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;border-right:1px solid var(--line)}
+  .stat-card:last-child{border-right:none}
+  [dir="rtl"] .stat-card{border-right:none;border-left:1px solid var(--line)}
+  [dir="rtl"] .stat-card:last-child{border-left:none}
+  .stat-card .num{font-size:1.35rem;font-weight:800;color:var(--purple-glow)}
+  .stat-card .lbl{color:var(--muted);font-size:.82rem;margin-top:2px}
+  .stat-icon{width:32px;height:32px;border-radius:8px;background:var(--card-2);display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+  .stat-icon svg{width:16px;height:16px;stroke:var(--purple-glow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* ---------- sections ---------- */
+  .section{padding:34px 0}
+  .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+  .section-title{display:flex;align-items:center;gap:10px;font-size:1.35rem;font-weight:700}
+  .section-title .sq{width:36px;height:36px;border-radius:10px;background:var(--card-2);display:flex;align-items:center;justify-content:center;color:var(--purple-glow)}
+  .section-title .sq svg{width:18px;height:18px;stroke:var(--purple-glow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .view-all{color:var(--purple-glow);font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:6px}
+
+  /* ---------- branches ---------- */
+  .branch-grid{display:flex;flex-wrap:wrap;gap:22px;}
+  .branch{text-align:center;cursor:pointer;transition:.2s;position:relative;width:110px;}
+  .branch:hover .av{transform:translateY(-4px);}
+  .branch .av{width:92px;height:92px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:.25s;border:2px solid rgba(124,58,237,.25);}
+  .branch.md .av{width:80px;height:80px;}
+  .branch .av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  .branch .name{font-weight:600;font-size:.85rem;color:#ded8ec}
+  .branch .del{position:absolute;top:0;right:6px;background:rgba(239,68,68,.9);color:#fff;border-radius:8px;width:22px;height:22px;font-size:.75rem;display:none;align-items:center;justify-content:center;z-index:5;line-height:1;}
+  body.admin-mode .branch .del{display:flex}
+
+  .av-spiral-red{background:repeating-conic-gradient(from 0deg,#2a0000 0deg 8deg,#d61f1f 8deg 16deg,#5c0d0d 16deg 24deg);box-shadow:inset 0 0 20px rgba(0,0,0,.6),0 0 18px rgba(214,31,31,.25);}
+  .av-spiral-blue{background:repeating-conic-gradient(from 0deg,#00131f 0deg 8deg,#1fa8d6 8deg 16deg,#0d3a5c 16deg 24deg);box-shadow:inset 0 0 20px rgba(0,0,0,.6),0 0 18px rgba(31,168,214,.25);}
+  .av-chat{background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;}
+  .av-xdark{background:#0c0c14;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;}
+  .av-xdark .x{font-size:1.6rem;font-weight:800;color:#b388ff;text-shadow:0 0 12px rgba(179,136,255,.9);}
+  .av-xdark .lbl{font-size:.6rem;color:#6ee7ff;letter-spacing:.5px;margin-top:2px;text-shadow:0 0 8px rgba(110,231,255,.7);}
+  .av-dletter{background:#0c0c14;display:flex;align-items:center;justify-content:center;font-size:2.1rem;font-weight:800;color:#d9d4e8;font-family:'Poppins',sans-serif;}
+  .av-sphere{background:radial-gradient(circle at 35% 30%,#ff6b6b,#b31217 55%,#3d0000 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(220,38,38,.4),inset -6px -6px 14px rgba(0,0,0,.5);}
+  .av-sphere .t1{font-size:.56rem;font-weight:800;color:#fff;letter-spacing:.5px;}
+  .av-sphere .t2{font-size:.42rem;color:#ffd9d9;letter-spacing:1px;margin-top:1px;}
+
+  /* ---------- articles/news cards ---------- */
+  .art-list{display:flex;flex-direction:column;gap:16px}
+  .art-card{display:grid;grid-template-columns:220px 1fr;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:.2s;position:relative;}
+  .art-card:hover{border-color:var(--purple-2)}
+  .art-thumb{background:radial-gradient(circle at 50% 30%,#2a1b4d,#0b0714 75%);min-height:150px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  .art-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .art-thumb .glyph{opacity:.5;filter:drop-shadow(0 0 10px rgba(168,85,247,.5));}
+  .art-thumb .badge{position:absolute;top:12px;left:12px;background:var(--purple);color:#fff;font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:8px;z-index:2}
+  [dir="rtl"] .art-thumb .badge{left:auto;right:12px;}
+  .art-body{padding:18px 20px 18px 4px}
+  [dir="rtl"] .art-body{padding:18px 4px 18px 20px}
+  .art-body h3{font-size:1.12rem;margin-bottom:8px;font-weight:600}
+  .art-body p{color:var(--muted);font-size:.9rem;line-height:1.65}
+  .art-meta{color:#736a8c;font-size:.8rem;margin-top:12px}
+  .art-card .del{position:absolute;bottom:10px;right:10px;z-index:3}
+  [dir="rtl"] .art-card .del{right:auto;left:10px}
+
+  /* ---------- CTA ---------- */
+  .cta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;background:linear-gradient(120deg,#1d1035,#120a24);border:1px solid var(--line);border-radius:22px;padding:32px;margin:44px 0;}
+  .cta-left{display:flex;align-items:center;gap:18px}
+  .cta-left .mark{width:56px;height:56px}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:48px 0 20px;margin-top:20px;color:var(--muted)}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:26px}
+  .foot-grid h4{color:var(--text);font-size:.95rem;margin-bottom:14px;font-weight:600}
+  .foot-grid a{display:block;color:var(--muted);font-size:.87rem;padding:5px 0}
+  .foot-grid a:hover{color:var(--purple-glow)}
+  .foot-brand p{margin-top:12px;font-size:.85rem;line-height:1.7;max-width:230px}
+  .foot-social{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .foot-social a{min-width:34px;height:34px;border-radius:9px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:.85rem;padding:0 10px;border:1px solid var(--line);transition:.2s}
+  .foot-social a:hover{border-color:var(--purple-2)}
+  .foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;font-size:.8rem;flex-wrap:wrap;gap:10px}
+
+  /* ---------- article detail ---------- */
+  .article-hero{border-radius:20px;overflow:hidden;height:290px;background:radial-gradient(circle at 50% 30%,#2a1b4d,#0b0714 75%);margin-bottom:24px;position:relative;display:flex;align-items:center;justify-content:center}
+  .article-hero img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .article-detail h1{font-size:2rem;margin-bottom:10px;font-weight:700}
+  .article-detail .meta{color:var(--muted);font-size:.88rem;margin-bottom:22px}
+  .article-detail .content{line-height:2;color:#d6d0e6;font-size:1.02rem}
+  .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--purple-glow);font-weight:600;margin-bottom:20px}
+
+  /* ---------- modal ---------- */
+  .modal-bg{position:fixed;inset:0;background:rgba(4,2,10,.8);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--card);border:1px solid var(--line);border-radius:20px;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:26px}
+  .modal h3{font-size:1.3rem;margin-bottom:6px}
+  .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .modal-x{width:34px;height:34px;border-radius:9px;background:var(--bg-soft);display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;border:1px solid var(--line);color:var(--muted);transition:.2s}
+  .modal-x:hover{color:var(--text);border-color:var(--purple-2)}
+
+  /* ---------- forms ---------- */
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+  .field input[type=text],.field input[type=password],.field input[type=url],.field textarea,.field input[type=number]{
+    width:100%;background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:.92rem;transition:.2s}
+  .field textarea{min-height:110px;resize:vertical}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--purple-2);box-shadow:0 0 0 3px rgba(147,51,234,.12)}
+  .field input[type=file]{color:var(--muted);font-size:.85rem}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  /* ---------- admin page ---------- */
+  #page-admin{direction:rtl;font-family:'Tajawal',sans-serif;text-align:right;}
+  .admin-gate{max-width:400px;margin:80px auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px;text-align:center}
+  .admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .admin-tab{padding:9px 16px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:.87rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.2s}
+  .admin-tab:hover{color:var(--text);border-color:var(--purple-2)}
+  .admin-tab.active{background:linear-gradient(135deg,var(--purple-2),var(--purple));color:#fff;border-color:transparent}
+  .admin-panel-block{display:none}
+  .admin-panel-block.active{display:block}
+  .admin-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+  .list-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+  .list-item:last-child{border-bottom:none}
+  .list-item .grow{flex:1;min-width:0}
+  .list-item .grow b{display:block;font-size:.92rem}
+  .list-item .grow span{color:var(--muted);font-size:.8rem}
+  .branch-admin-item{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .branch-admin-item:last-child{border-bottom:none}
+  .branch-admin-thumb{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--line);background:var(--card-2);display:flex;align-items:center;justify-content:center}
+  .branch-admin-thumb img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .branch-admin-info{flex:1;min-width:0}
+  .branch-admin-info b{display:block;font-size:.9rem}
+  .branch-admin-info span{color:var(--muted);font-size:.78rem;display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+  .branch-admin-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .msg-item{background:var(--bg-soft);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:.87rem;border:1px solid var(--line)}
+  .msg-item .meta{color:var(--muted);font-size:.76rem;margin-top:6px}
+  .empty{color:var(--muted);text-align:center;padding:26px;font-size:.9rem}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:.88rem;z-index:500;opacity:0;pointer-events:none;transition:.3s;white-space:nowrap}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
+
+  .mobile-nav{display:none;position:fixed;inset:0;background:rgba(5,3,8,.98);z-index:150;flex-direction:column;padding:84px 30px 30px;gap:6px;backdrop-filter:blur(12px)}
+  .mobile-nav.open{display:flex}
+  .mobile-nav a{padding:14px 4px;border-bottom:1px solid var(--line);font-weight:600}
+
+  /* ---------- security gate modal ---------- */
+  .security-gate{max-width:420px;margin:0 auto;}
+  .security-badge{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--purple-2),var(--purple));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+  .security-badge svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .attempt-bar{height:4px;background:var(--line);border-radius:4px;margin-top:12px;overflow:hidden}
+  .attempt-fill{height:100%;background:var(--danger);border-radius:4px;transition:width .4s}
+
+  /* ---------- notification banner ---------- */
+  #notifBanner{display:none;position:relative;z-index:55;padding:11px 20px;text-align:center;font-size:.88rem;font-weight:600;line-height:1.5;animation:slideDown .3s ease both;}
+  #notifBanner.show{display:block;}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+  #notifBanner.type-info{background:linear-gradient(90deg,#1e3a5f,#1a4a7a);color:#93c5fd;border-bottom:1px solid #1d4ed8;}
+  #notifBanner.type-success{background:linear-gradient(90deg,#14291e,#166534);color:#86efac;border-bottom:1px solid #16a34a;}
+  #notifBanner.type-warning{background:linear-gradient(90deg,#2d1f05,#78350f);color:#fcd34d;border-bottom:1px solid #d97706;}
+  #notifBanner.type-danger{background:linear-gradient(90deg,#2d0707,#7f1d1d);color:#fca5a5;border-bottom:1px solid #ef4444;}
+  .notif-close{position:absolute;left:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:inherit;opacity:.7;font-size:1.1rem;cursor:pointer;line-height:1;padding:4px;}
+  [dir="rtl"] .notif-close{left:auto;right:16px;}
+  .notif-close:hover{opacity:1;}
+  .notif-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-left:8px;vertical-align:middle;animation:pulse 2s infinite;}
+  [dir="rtl"] .notif-dot{margin-left:0;margin-right:8px;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+  /* ---------- color preview swatch ---------- */
+  .color-row{display:flex;align-items:center;gap:10px;}
+  .color-row input[type=color]{width:44px;height:36px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:2px;background:var(--bg-soft);}
+  .color-preview{flex:1;height:36px;border-radius:8px;border:1px solid var(--line);}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;padding-top:36px}
+    .hero-visual{height:240px;order:-1}
+    .hero h1{font-size:2.3rem}
+    .stats{grid-template-columns:repeat(2,1fr);row-gap:20px}
+    .stat-card{border-right:none;border-left:none;border-bottom:1px solid var(--line);padding-bottom:16px}
+    nav.desktop-nav{display:none}
+    .menu-toggle{display:flex}
+    .art-card{grid-template-columns:1fr}
+    .art-thumb{height:150px}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .row2{grid-template-columns:1fr}
+    .branch-admin-info span{max-width:120px}
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG defs -->
+<svg width="0" height="0" style="position:absolute;pointer-events:none">
+  <defs>
+    <linearGradient id="metalGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3eefe"/>
+      <stop offset="45%" stop-color="#c9a9ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+  <div class="header-in">
+    <div class="logo" onclick="go('home')">
+      <svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 4 L26 11 L18 9 L18 16 L10 16 L13 24 L32 30 L51 24 L54 16 L46 16 L46 9 L38 11 Z" fill="url(#metalGrad)"/>
+        <path d="M32 14 L52 21 V33 C52 46 42 55 32 60 C22 55 12 46 12 33 V21 Z" fill="url(#metalGrad)" stroke="#4c1d95" stroke-width="1"/>
+        <text x="32" y="42" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="800" font-size="22" fill="#1b0a33">SD</text>
+      </svg>
+      Super Dark
+    </div>
+    <nav class="desktop-nav" id="desktopNav">
+      <a href="#" onclick="go('home');return false" data-r="home" data-i18n="nav_home">Home</a>
+      <a href="#" onclick="go('branches');return false" data-r="branches" data-i18n="nav_branches">Branches</a>
+      <a href="#" onclick="go('articles');return false" data-r="articles" data-i18n="nav_articles">Articles</a>
+      <a href="#" onclick="go('news');return false" data-r="news" data-i18n="nav_news">News</a>
+    </nav>
+    <div class="header-actions">
+      <!-- Language toggle -->
+      <button class="icon-btn lang-btn" onclick="toggleLang()" id="langBtn" title="Switch Language">AR</button>
+      <!-- Mobile menu -->
+      <button class="icon-btn menu-toggle" onclick="toggleMobileNav()">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Notification Banner -->
+<div id="notifBanner" role="alert" aria-live="polite">
+  <button class="notif-close" onclick="dismissNotif()" aria-label="إغلاق">&#x2715;</button>
+  <span class="notif-dot"></span>
+  <span id="notifText"></span>
+</div>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#" onclick="go('home');toggleMobileNav();return false" data-i18n="nav_home">Home</a>
+  <a href="#" onclick="go('branches');toggleMobileNav();return false" data-i18n="nav_branches">Branches</a>
+  <a href="#" onclick="go('articles');toggleMobileNav();return false" data-i18n="nav_articles">Articles</a>
+  <a href="#" onclick="go('news');toggleMobileNav();return false" data-i18n="nav_news">News</a>
+</div>
+
+<!-- ============ HOME ============ -->
+<div class="page" id="page-home">
+  <div class="container">
+    <section class="hero">
+      <div>
+        <div class="eyebrow" id="heroEyebrowEl">Welcome to</div>
+        <h1 id="heroTitleEl">Super Dark</h1>
+        <p id="heroDescEl">Your ultimate destination for digital solutions, security, and growth.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="go('branches')" data-i18n="hero_explore">Explore Services</button>
+          <button class="btn btn-outline" onclick="openModal('contactModalBg')" data-i18n="hero_contact">Contact Us</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="nebula"></div>
+        <div class="shield-wrap">
+          <svg width="220" height="230" viewBox="0 0 64 68" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 4 L26 11 L18 9 L18 16 L10 16 L13 24 L32 30 L51 24 L54 16 L46 16 L46 9 L38 11 Z" fill="url(#metalGrad)"/>
+            <path d="M32 14 L54 22 V35 C54 49 43 59 32 64 C21 59 10 49 10 35 V22 Z" fill="url(#metalGrad)" stroke="#4c1d95" stroke-width="1"/>
+            <text x="32" y="45" text-anchor="middle" font-family="Poppins,sans-serif" font-weight="800" font-size="24" fill="#1b0a33">SD</text>
+          </svg>
+          <div class="pedestal"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats" id="statsGrid"></div>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">
+          <div class="sq"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <span data-i18n="sec_branches">Our Branches</span>
+        </div>
+        <a href="#" class="view-all" onclick="go('branches');return false" data-i18n="view_branches">View All Branches</a>
+      </div>
+      <div class="branch-grid" id="homeBranches"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">
+          <div class="sq"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+          <span data-i18n="sec_articles">Latest Articles</span>
+        </div>
+        <a href="#" class="view-all" onclick="go('articles');return false" data-i18n="view_articles">View All Articles</a>
+      </div>
+      <div class="art-list" id="homeArticles"></div>
+    </section>
+
+    <div class="cta">
+      <div class="cta-left">
+        <svg class="mark" width="56" height="56" viewBox="0 0 64 64"><path d="M32 4 L26 11 L18 9 L18 16 L10 16 L13 24 L32 30 L51 24 L54 16 L46 16 L46 9 L38 11 Z" fill="url(#metalGrad)"/><path d="M32 14 L52 21 V33 C52 46 42 55 32 60 C22 55 12 46 12 33 V21 Z" fill="url(#metalGrad)"/></svg>
+        <div>
+          <h3 data-i18n="cta_title">Ready to Get Started?</h3>
+          <p style="color:var(--muted);margin-top:4px" data-i18n="cta_sub">Join thousands of satisfied clients and grow your business with Super Dark.</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('contactModalBg')" data-i18n="cta_btn">Contact Us Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BRANCHES ============ -->
+<div class="page" id="page-branches">
+  <div class="container" style="padding-top:30px">
+    <div class="section-head">
+      <div class="section-title">
+        <div class="sq"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <span data-i18n="sec_branches">Our Branches</span>
+      </div>
+    </div>
+    <div class="branch-grid" id="branchesFull"></div>
+  </div>
+</div>
+
+<!-- ============ ARTICLES ============ -->
+<div class="page" id="page-articles">
+  <div class="container" style="padding-top:30px">
+    <div class="section-head">
+      <div class="section-title">
+        <div class="sq"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <span data-i18n="sec_all_articles">All Articles</span>
+      </div>
+    </div>
+    <div class="art-list" id="articlesFull"></div>
+  </div>
+</div>
+
+<!-- ============ ARTICLE DETAIL ============ -->
+<div class="page" id="page-article">
+  <div class="container" style="padding-top:30px">
+    <a href="#" class="back-link" onclick="go('articles');return false">
+      <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="back_articles">Back to Articles</span>
+    </a>
+    <div class="article-detail" id="articleDetailBody"></div>
+  </div>
+</div>
+
+<!-- ============ NEWS ============ -->
+<div class="page" id="page-news">
+  <div class="container" style="padding-top:30px">
+    <div class="section-head">
+      <div class="section-title">
+        <div class="sq"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <span data-i18n="sec_news">Latest News</span>
+      </div>
+    </div>
+    <div class="art-list" id="newsFull"></div>
+  </div>
+</div>
+
+<!-- ============ ADMIN ============ -->
+<div class="page" id="page-admin">
+  <div class="container" style="padding-top:30px">
+
+    <div class="admin-gate" id="adminGate">
+      <div class="security-badge">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h3 style="margin-bottom:8px">دخول لوحة الإدارة</h3>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:18px">هذه اللوحة مخصصة لمالك الموقع فقط</p>
+      <div class="field"><input type="password" id="adminPass" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')tryAdminLogin()"></div>
+      <div class="attempt-bar" id="attemptBar" style="display:none"><div class="attempt-fill" id="attemptFill" style="width:0%"></div></div>
+      <p id="attemptMsg" style="color:var(--danger);font-size:.78rem;margin-top:8px;min-height:16px"></p>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px" onclick="tryAdminLogin()">دخول</button>
+    </div>
+
+    <div id="adminPanel" style="display:none">
+      <div class="section-head">
+        <div class="section-title">
+          <div class="sq"><svg viewBox="0 0 24 24" stroke="var(--purple-glow)" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+          لوحة إدارة سوبر دارك
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="adminLogout()">تسجيل خروج</button>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="stats" onclick="switchAdminTab('stats')">الإحصائيات</button>
+        <button class="admin-tab" data-tab="branches" onclick="switchAdminTab('branches')">الفروع</button>
+        <button class="admin-tab" data-tab="articles" onclick="switchAdminTab('articles')">المقالات</button>
+        <button class="admin-tab" data-tab="news" onclick="switchAdminTab('news')">الأخبار</button>
+        <button class="admin-tab" data-tab="links" onclick="switchAdminTab('links')">الروابط</button>
+        <button class="admin-tab" data-tab="messages" onclick="switchAdminTab('messages')">الرسائل</button>
+        <button class="admin-tab" data-tab="notify" onclick="switchAdminTab('notify')">الإشعارات</button>
+        <button class="admin-tab" data-tab="hero" onclick="switchAdminTab('hero')">تخصيص الهيرو</button>
+        <button class="admin-tab" data-tab="data" onclick="switchAdminTab('data')">النسخ الاحتياطي</button>
+      </div>
+
+      <!-- STATS TAB -->
+      <div class="admin-panel-block active" id="tab-stats">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">تعديل الإحصائيات الأربعة</h3>
+          <div id="statsEditor"></div>
+          <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="saveStats()">حفظ الإحصائيات</button>
+        </div>
+      </div>
+
+      <!-- BRANCHES TAB -->
+      <div class="admin-panel-block" id="tab-branches">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">إضافة فرع جديد</h3>
+          <div class="row2">
+            <div class="field"><label>الاسم</label><input type="text" id="brName"></div>
+            <div class="field"><label>الوصف</label><input type="text" id="brDesc" placeholder="نبذة عن هذه القناة أو الفرع"></div>
+          </div>
+          <div class="field"><label>الرابط (اختياري)</label><input type="url" id="brLink" placeholder="https://t.me/..."></div>
+          <div class="field"><label>صورة الفرع (اختياري)</label><input type="file" id="brImg" accept="image/*"></div>
+          <button class="btn btn-primary btn-sm" onclick="addBranch()">إضافة الفرع</button>
+        </div>
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">الفروع الحالية</h3>
+          <p style="color:var(--muted);font-size:.82rem;margin-bottom:12px">يمكنك تغيير صورة أي فرع أو حذفه من القائمة أدناه</p>
+          <div id="branchAdminList"></div>
+        </div>
+      </div>
+
+      <!-- ARTICLES TAB -->
+      <div class="admin-panel-block" id="tab-articles">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px" id="articleFormTitle">إضافة مقالة جديدة</h3>
+          <input type="hidden" id="artEditId">
+          <div class="row2">
+            <div class="field"><label>العنوان</label><input type="text" id="artTitle"></div>
+            <div class="field"><label>التصنيف</label><input type="text" id="artBadge" placeholder="Announcement / Update / News"></div>
+          </div>
+          <div class="field"><label>ملخص قصير</label><input type="text" id="artSummary"></div>
+          <div class="field"><label>محتوى المقالة</label><textarea id="artContent"></textarea></div>
+          <div class="field"><label>صورة المقالة</label><input type="file" id="artImg" accept="image/*"></div>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-primary btn-sm" onclick="saveArticle()">حفظ المقالة</button>
+            <button class="btn btn-outline btn-sm" onclick="resetArticleForm()">مقالة جديدة</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <h3 style="margin-bottom:10px">جميع المقالات</h3>
+          <div id="articleAdminList"></div>
+        </div>
+      </div>
+
+      <!-- NEWS TAB -->
+      <div class="admin-panel-block" id="tab-news">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">نشر خبر جديد</h3>
+          <div class="field"><label>عنوان الخبر</label><input type="text" id="newsTitle"></div>
+          <div class="field"><label>نص الخبر</label><textarea id="newsContent"></textarea></div>
+          <div class="field"><label>صورة الخبر</label><input type="file" id="newsImg" accept="image/*"></div>
+          <button class="btn btn-primary btn-sm" onclick="publishNews()">نشر الخبر</button>
+        </div>
+        <div class="admin-card">
+          <h3 style="margin-bottom:10px">الأخبار المنشورة</h3>
+          <div id="newsAdminList"></div>
+        </div>
+      </div>
+
+      <!-- LINKS TAB -->
+      <div class="admin-panel-block" id="tab-links">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">معلومات التواصل</h3>
+          <div class="row2">
+            <div class="field"><label>البريد الإلكتروني</label><input type="text" id="cfEmail"></div>
+            <div class="field"><label>رقم الهاتف</label><input type="text" id="cfPhone"></div>
+          </div>
+          <div class="field"><label>الموقع</label><input type="text" id="cfLoc"></div>
+          <button class="btn btn-primary btn-sm" onclick="saveContact()">حفظ</button>
+        </div>
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">روابط التواصل الاجتماعي</h3>
+          <div class="row2">
+            <div class="field"><label>الاسم أو الأيقونة</label><input type="text" id="socIcon" placeholder="مثال: Telegram"></div>
+            <div class="field"><label>الرابط</label><input type="url" id="socUrl"></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addSocial()">إضافة</button>
+          <div id="socialAdminList" style="margin-top:14px"></div>
+        </div>
+      </div>
+
+      <!-- MESSAGES TAB -->
+      <div class="admin-panel-block" id="tab-messages">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">رسائل الزوار (<span id="msgCount">0</span>)</h3>
+          <div id="messagesList"></div>
+        </div>
+      </div>
+
+      <!-- NOTIFY TAB -->
+      <div class="admin-panel-block" id="tab-notify">
+        <div class="admin-card">
+          <h3 style="margin-bottom:6px">إشعار الزوار</h3>
+          <p style="color:var(--muted);font-size:.82rem;margin-bottom:14px">ظهر شريطاً ملوناً أعلى الموقع لجميع الزوار. يمكنهم إغلاقه ولكنه يعود عند كل جلسة جديدة.</p>
+          <div class="field"><label>نص الإشعار</label><input type="text" id="notifMsg" maxlength="200" placeholder="مثال: مرحباً بكم في الموقع الجديد!"></div>
+          <div class="field">
+            <label>نوع الإشعار</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px" id="notifTypeRow">
+              <button class="btn btn-sm" data-ntype="info"    onclick="selectNotifType('info')"    style="background:#1e3a5f;color:#93c5fd;border:2px solid transparent">معلومة</button>
+              <button class="btn btn-sm" data-ntype="success" onclick="selectNotifType('success')" style="background:#14291e;color:#86efac;border:2px solid transparent">نجاح</button>
+              <button class="btn btn-sm" data-ntype="warning" onclick="selectNotifType('warning')" style="background:#2d1f05;color:#fcd34d;border:2px solid transparent">تحذير</button>
+              <button class="btn btn-sm" data-ntype="danger"  onclick="selectNotifType('danger')"  style="background:#2d0707;color:#fca5a5;border:2px solid transparent">خطر</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+            <button class="btn btn-primary btn-sm" onclick="saveNotification(true)">تفعيل وحفظ</button>
+            <button class="btn btn-danger btn-sm" onclick="saveNotification(false)">إيقاف الإشعار</button>
+          </div>
+          <div id="notifStatus" style="margin-top:10px;font-size:.82rem;color:var(--muted)"></div>
+        </div>
+      </div>
+
+      <!-- HERO TAB -->
+      <div class="admin-panel-block" id="tab-hero">
+        <div class="admin-card">
+          <h3 style="margin-bottom:14px">تخصيص الهيرو</h3>
+          <div class="row2">
+            <div class="field"><label>العنوان الصغير (EN)</label><input type="text" id="heroEyebrowEn" maxlength="60" placeholder="Welcome to"></div>
+            <div class="field"><label>العنوان الصغير (AR)</label><input type="text" id="heroEyebrowAr" maxlength="60" placeholder="مرحباً بكم في"></div>
+          </div>
+          <div class="field"><label>العنوان الرئيسي</label><input type="text" id="heroTitle" maxlength="60" placeholder="Super Dark"></div>
+          <div class="field"><label>الوصف (EN)</label><input type="text" id="heroDescEn" maxlength="200"></div>
+          <div class="field"><label>الوصف (AR)</label><input type="text" id="heroDescAr" maxlength="200"></div>
+          <div class="field">
+            <label>اللون الرئيسي</label>
+            <div class="color-row">
+              <input type="color" id="heroPrimaryColor" value="#9333ea">
+              <div class="color-preview" id="heroPrimaryPreview" style="background:#9333ea"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>لون التوهج</label>
+            <div class="color-row">
+              <input type="color" id="heroGlowColor" value="#b388ff">
+              <div class="color-preview" id="heroGlowPreview" style="background:#b388ff"></div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" style="margin-top:6px" onclick="saveHero()">حفظ التخصيص</button>
+        </div>
+      </div>
+
+      <!-- DATA TAB -->
+      <div class="admin-panel-block" id="tab-data">
+        <div class="admin-card">
+          <h3 style="margin-bottom:10px">حفظ البيانات واستيرادها</h3>
+          <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px">
+            بيانات الموقع محفوظة محلياً في المتصفح. استخدم "تنزيل نسخة" لأخذ نسخة احتياطية، و"استيراد نسخة" لاستعادتها.
+          </p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary btn-sm" onclick="exportData()">تنزيل نسخة JSON</button>
+            <label class="btn btn-outline btn-sm" style="cursor:pointer">
+              استيراد نسخة JSON
+              <input type="file" accept=".json" style="display:none" onchange="importData(event)">
+            </label>
+            <button class="btn btn-danger btn-sm" onclick="clearAllData()">مسح جميع البيانات</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-bg" id="branchModalBg" onclick="if(event.target===this)closeModal('branchModalBg')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="branchModalTitle"></h3>
+      <button class="modal-x" onclick="closeModal('branchModalBg')">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p id="branchModalDesc" style="color:var(--muted);line-height:1.9;margin-bottom:16px"></p>
+    <a id="branchModalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="display:none">فتح القناة</a>
+  </div>
+</div>
+
+<div class="modal-bg" id="contactModalBg" onclick="if(event.target===this)closeModal('contactModalBg')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 data-i18n="contact_title">Contact Us</h3>
+      <button class="modal-x" onclick="closeModal('contactModalBg')">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="field"><label data-i18n="contact_name">Name</label><input type="text" id="msgName" maxlength="80"></div>
+    <div class="field"><label data-i18n="contact_msg">Your message</label><textarea id="msgBody" maxlength="2000"></textarea></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="sendMessage()" data-i18n="contact_send">Send</button>
+  </div>
+</div>
+
+<!-- Hidden file input for branch image change -->
+<input type="file" id="branchImgInput" accept="image/*" style="display:none" onchange="applyBranchImage(event)">
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo" style="font-size:1.15rem">
+          <svg class="mark" width="30" height="30" viewBox="0 0 64 64"><path d="M32 4 L26 11 L18 9 L18 16 L10 16 L13 24 L32 30 L51 24 L54 16 L46 16 L46 9 L38 11 Z" fill="url(#metalGrad)"/><path d="M32 14 L52 21 V33 C52 46 42 55 32 60 C22 55 12 46 12 33 V21 Z" fill="url(#metalGrad)"/></svg>
+          Super Dark
+        </div>
+        <p data-i18n="foot_desc">Your ultimate destination for digital solutions, security, and growth.</p>
+        <div class="foot-social" id="footSocial"></div>
+      </div>
+      <div>
+        <h4 data-i18n="foot_quick">Quick Links</h4>
+        <a href="#" onclick="go('home');return false" data-i18n="nav_home">Home</a>
+        <a href="#" onclick="go('branches');return false" data-i18n="nav_branches">Branches</a>
+        <a href="#" onclick="go('articles');return false" data-i18n="nav_articles">Articles</a>
+        <a href="#" onclick="openModal('contactModalBg');return false" data-i18n="nav_contact">Contact</a>
+      </div>
+      <div>
+        <h4 data-i18n="foot_services">Services</h4>
+        <a href="#" onclick="go('branches');return false" data-i18n="svc_security">Digital Security</a>
+        <a href="#" onclick="go('branches');return false" data-i18n="svc_web">Web Development</a>
+        <a href="#" onclick="go('branches');return false" data-i18n="svc_cloud">Cloud Solutions</a>
+        <a href="#" onclick="go('branches');return false" data-i18n="svc_support">Support 24/7</a>
+      </div>
+      <div>
+        <h4 data-i18n="foot_support">Support</h4>
+        <a href="#" onclick="openModal('contactModalBg');return false" data-i18n="sup_help">Help Center</a>
+        <a href="#" onclick="openModal('contactModalBg');return false" data-i18n="nav_contact">Contact Us</a>
+        <a href="#" onclick="return false" data-i18n="sup_privacy">Privacy Policy</a>
+        <a href="#" onclick="return false" data-i18n="sup_terms">Terms of Service</a>
+      </div>
+      <div>
+        <h4 data-i18n="foot_contact">Contact Us</h4>
+        <a id="footEmail" href="#" style="word-break:break-all"></a>
+        <a id="footPhone" href="#"></a>
+        <a id="footLoc" href="#"></a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-i18n="foot_copy">© 2025 Super Dark. All rights reserved.</span>
+      <span data-i18n="foot_made">Designed with care by Super Dark Team</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===========================================================
+   SECURITY UTILITY: Escape HTML to prevent XSS
+=========================================================== */
+function esc(str){
+  if(str==null) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+/* ===========================================================
+   CONSTANTS
+=========================================================== */
+const ADMIN_PASSWORD = 'yosefs';
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 60000; // 1 minute
+
+/* ===========================================================
+   STATE
+=========================================================== */
+let isAdmin = false;
+let currentArticleId = null;
+let currentBranchImgId = null;
+let loginAttempts = 0;
+let lockoutUntil = 0;
+
+/* ===========================================================
+   IN-MEMORY DATABASE (localStorage backed)
+=========================================================== */
+let DB = {
+  stats: [
+    {num:'24/7', lbl:'Always Online', lbl_ar:'متاح دائماً'},
+    {num:'100+', lbl:'Active Clients', lbl_ar:'عميل نشط'},
+    {num:'7', lbl:'Branches', lbl_ar:'فروع'},
+    {num:'99.9%', lbl:'Uptime', lbl_ar:'وقت التشغيل'},
+  ],
+  branches: [
+    {id:1, name:'Super Dark', kind:'spiral-red', size:'lg', desc:'The main Super Dark channel — all core updates and offers in one place.', desc_ar:'القناة الرئيسية لسوبر دارك — جميع التحديثات والعروض في مكان واحد.', img:'', link:''},
+    {id:2, name:'Super Dark - Gifts', kind:'spiral-blue', size:'lg', desc:'Our dedicated channel for giveaways and periodic contests for clients.', desc_ar:'قناتنا المخصصة للهدايا والمسابقات الدورية للعملاء.', img:'', link:''},
+    {id:3, name:'D-Offers', kind:'chat', size:'md', desc:'Daily deals and discount announcements.', desc_ar:'عروض ومنح خصومات يومية.', img:'', link:''},
+    {id:4, name:'Auct Bot', kind:'xdark', size:'md', desc:'Automated auction bot to manage bidding with ease.', desc_ar:'بوت المزاد الآلي لإدارة العطاءات بكل سهولة.', img:'', link:''},
+    {id:5, name:'D-Exclusive', kind:'dletter', size:'md', desc:'A secondary channel for exclusive offers.', desc_ar:'قناة ثانوية للعروض الحصرية.', img:'', link:''},
+    {id:6, name:'SD Trading', kind:'sphere', size:'lg', desc:'Super Dark Trading — our financial and trading services channel.', desc_ar:'سوبر دارك تريدينج — قناة الخدمات المالية والتجارية.', img:'', link:''},
+  ],
+  articles: [
+    {id:1, title:'Welcome to Super Dark Official Website', title_ar:'مرحباً بكم في الموقع الرسمي لسوبر دارك', badge:'Announcement', summary:'We are excited to announce the launch of our official website.', summary_ar:'يسعدنا الإعلان عن إطلاق موقعنا الرسمي.', content:'We are excited to announce the launch of our brand new official website, bringing together all of our services and branches in one place. Through this site you will be able to follow the latest news, browse our various branches and channels, and read our technical articles. We are continuously working on developing this platform to provide you with the best possible experience. Stay tuned for more upcoming updates.', content_ar:'يسعدنا الإعلان عن إطلاق موقعنا الرسمي الجديد، الذي يجمع جميع خدماتنا وفروعنا في مكان واحد. من خلال هذا الموقع يمكنك متابعة آخر الأخبار والتحديثات والمقالات التقنية. نعمل باستمرار على تطوير هذه المنصة لنقدم لك أفضل تجربة ممكنة.', img:'', date:'July 12, 2025', read:'3 min read'},
+    {id:2, title:'New Security Features Launched', title_ar:'إطلاق ميزات أمان جديدة', badge:'Update', summary:'We have added new advanced security features to protect your data.', summary_ar:'أضفنا ميزات أمان متقدمة لحماية بياناتك وخدماتك.', content:'As part of our ongoing commitment to protecting our clients\' data, we have added a set of advanced security features including additional encryption, continuous monitoring of suspicious activity, and an instant alert system.', content_ar:'في إطار التزامنا المستمر بحماية بيانات عملائنا، أضفنا مجموعة من ميزات الأمان المتقدمة تشمل تشفيراً إضافياً ومراقبة مستمرة للنشاط المشبوه ونظام تنبيه فوري.', img:'', date:'July 10, 2025', read:'4 min read'},
+    {id:3, title:'Expanding Our Global Network', title_ar:'توسيع شبكتنا العالمية', badge:'News', summary:'Super Dark is expanding! New branches coming soon.', summary_ar:'سوبر دارك تتوسع! فروع جديدة قريباً لخدمتك.', content:'We are pleased to announce new expansion plans for the Super Dark network, where we will be opening additional branches in the coming period to cover more regions and offer our services to a larger number of clients around the world.', content_ar:'يسعدنا الإعلان عن خطط توسعية جديدة لشبكة سوبر دارك، حيث سنفتح فروعاً إضافية في الفترة القادمة لتغطية مناطق أكثر وتقديم خدماتنا لشريحة أوسع من العملاء حول العالم.', img:'', date:'July 8, 2025', read:'2 min read'},
+  ],
+  news: [],
+  messages: [],
+  social: [
+    {icon:'TG', url:'#', name:'Telegram'},
+    {icon:'TW', url:'#', name:'Twitter / X'},
+    {icon:'IG', url:'#', name:'Instagram'},
+    {icon:'YT', url:'#', name:'YouTube'},
+  ],
+  contact: {email:'support@superdark.com', phone:'+964 000 000 0000', loc:'Iraq - Baghdad'},
+  notification: {enabled: false, message: '', type: 'info'},
+  hero: {eyebrow_en:'Welcome to', eyebrow_ar:'مرحباً بكم في', title:'Super Dark', desc_en:'Your ultimate destination for digital solutions, security, and growth.', desc_ar:'وجهتك الأمثل للحلول الرقمية والأمن والنمو.', primaryColor:'#9333ea', glowColor:'#b388ff'}
+};
+
+/* Load from localStorage */
+(function(){
+  try{
+    const saved = localStorage.getItem('superdark_db');
+    if(saved){
+      const parsed = JSON.parse(saved);
+      DB = Object.assign(DB, parsed);
+    }
+  }catch(e){}
+})();
+
+function saveDB(){
+  try{ localStorage.setItem('superdark_db', JSON.stringify(DB)); }catch(e){}
+}
+
+/* ===========================================================
+   i18n - BILINGUAL (EN / AR)
+=========================================================== */
+let lang = localStorage.getItem('sd_lang') || 'en';
+
+const T = {
+  en: {
+    nav_home:'Home', nav_branches:'Branches', nav_articles:'Articles', nav_news:'News', nav_admin:'Admin Panel', nav_contact:'Contact',
+    hero_eyebrow:'Welcome to', hero_desc:'Your ultimate destination for digital solutions, security, and growth.',
+    hero_explore:'Explore Services', hero_contact:'Contact Us',
+    sec_branches:'Our Branches', sec_articles:'Latest Articles', sec_news:'Latest News', sec_all_articles:'All Articles',
+    view_branches:'View All Branches', view_articles:'View All Articles',
+    cta_title:'Ready to Get Started?', cta_sub:'Join thousands of satisfied clients and grow your business with Super Dark.', cta_btn:'Contact Us Now',
+    contact_title:'Contact Us', contact_name:'Name', contact_msg:'Your message', contact_send:'Send Message',
+    foot_desc:'Your ultimate destination for digital solutions, security, and growth.',
+    foot_quick:'Quick Links', foot_services:'Services', foot_support:'Support', foot_contact:'Contact Us',
+    svc_security:'Digital Security', svc_web:'Web Development', svc_cloud:'Cloud Solutions', svc_support:'Support 24/7',
+    sup_help:'Help Center', sup_privacy:'Privacy Policy', sup_terms:'Terms of Service',
+    back_articles:'Back to Articles',
+    foot_copy:'© 2025 Super Dark. All rights reserved.', foot_made:'Designed with care by Super Dark Team',
+    no_branches:'No branches yet', no_articles:'No articles yet', no_news:'No news yet',
+    stat_lbl0:'Always Online', stat_lbl1:'Active Clients', stat_lbl2:'Branches', stat_lbl3:'Uptime',
+  },
+  ar: {
+    nav_home:'الرئيسية', nav_branches:'الفروع', nav_articles:'المقالات', nav_news:'الأخبار', nav_admin:'لوحة الإدارة', nav_contact:'تواصل معنا',
+    hero_eyebrow:'مرحباً بكم في', hero_desc:'وجهتك الأمثل للحلول الرقمية والأمن والنمو.',
+    hero_explore:'استكشف الخدمات', hero_contact:'تواصل معنا',
+    sec_branches:'فروعنا', sec_articles:'أحدث المقالات', sec_news:'أحدث الأخبار', sec_all_articles:'جميع المقالات',
+    view_branches:'عرض جميع الفروع', view_articles:'عرض جميع المقالات',
+    cta_title:'مستعد للبدء؟', cta_sub:'انضم إلى آلاف العملاء الراضين وانمِ أعمالك مع سوبر دارك.', cta_btn:'تواصل معنا الآن',
+    contact_title:'تواصل معنا', contact_name:'الاسم', contact_msg:'رسالتك', contact_send:'إرسال الرسالة',
+    foot_desc:'وجهتك الأمثل للحلول الرقمية والأمن والنمو.',
+    foot_quick:'روابط سريعة', foot_services:'الخدمات', foot_support:'الدعم', foot_contact:'تواصل معنا',
+    svc_security:'الأمن الرقمي', svc_web:'تطوير المواقع', svc_cloud:'الحلول السحابية', svc_support:'دعم 24/7',
+    sup_help:'مركز المساعدة', sup_privacy:'سياسة الخصوصية', sup_terms:'شروط الاستخدام',
+    back_articles:'العودة للمقالات',
+    foot_copy:'© 2025 سوبر دارك. جميع الحقوق محفوظة.', foot_made:'صُمم بعناية من قِبل فريق سوبر دارك',
+    no_branches:'لا توجد فروع بعد', no_articles:'لا توجد مقالات بعد', no_news:'لا توجد أخبار بعد',
+    stat_lbl0:'متاح دائماً', stat_lbl1:'عميل نشط', stat_lbl2:'فروع', stat_lbl3:'وقت التشغيل',
+  }
+};
+
+function t(key){ return (T[lang] && T[lang][key]) || (T['en'][key]) || key; }
+
+function applyLang(){
+  const isRtl = lang === 'ar';
+  document.getElementById('htmlRoot').setAttribute('lang', lang);
+  document.getElementById('htmlRoot').setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  document.getElementById('langBtn').textContent = isRtl ? 'EN' : 'AR';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  localStorage.setItem('sd_lang', lang);
+  renderPublicAll();
+}
+
+function toggleLang(){
+  lang = (lang === 'en') ? 'ar' : 'en';
+  applyLang();
+}
+
+/* ===========================================================
+   ROUTING
+=========================================================== */
+function go(route, param){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg = document.getElementById('page-'+route);
+  if(pg) pg.classList.add('active');
+  document.querySelectorAll('.desktop-nav a').forEach(a=>a.classList.toggle('active', a.dataset.r===route));
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(route==='article' && param!=null){ currentArticleId=param; renderArticleDetail(); }
+  if(route==='admin'){ renderAdminAll(); }
+  // update hash without reloading
+  history.replaceState(null,'', window.location.pathname + (route !== 'home' ? '#'+route : ''));
+}
+
+function openArticle(id){ currentArticleId=id; go('article', id); }
+function toggleMobileNav(){ document.getElementById('mobileNav').classList.toggle('open'); }
+
+/* hash-based routing including #admins trigger */
+function handleHash(){
+  const hash = window.location.hash.replace('#','').toLowerCase().trim();
+  if(hash === 'admins' || hash === 'admin'){
+    go('admin');
+  } else if(['branches','articles','news','article'].includes(hash)){
+    go(hash);
+  } else {
+    go('home');
+  }
+}
+
+/* ===========================================================
+   TOAST
+=========================================================== */
+let toastTimer = null;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+/* Close modal on Escape */
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-bg.open').forEach(m=>m.classList.remove('open'));
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+});
+
+/* ===========================================================
+   FILE READER
+=========================================================== */
+function fileToDataUrl(inputEl, cb){
+  const f = inputEl.files[0];
+  if(!f){ cb(''); return; }
+  if(f.size > 4 * 1024 * 1024){ toast('الصورة كبيرة جداً (الحد الأقصى 4MB)'); cb(''); return; }
+  const r = new FileReader();
+  r.onload = ()=>cb(r.result);
+  r.onerror = ()=>{ toast('خطأ في قراءة الملف'); cb(''); };
+  r.readAsDataURL(f);
+}
+
+/* ===========================================================
+   STAT ICONS (pure SVG, no emoji)
+=========================================================== */
+const STAT_ICONS = [
+  `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  `<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  `<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+];
+
+/* ===========================================================
+   AVATAR INNER HTML (no emoji)
+=========================================================== */
+function avatarInner(b){
+  if(b.img) return `<img src="${esc(b.img)}" alt="${esc(b.name)}">`;
+  switch(b.kind){
+    case 'spiral-red':  return `<div class="av-spiral-red" style="width:100%;height:100%;border-radius:50%"></div>`;
+    case 'spiral-blue': return `<div class="av-spiral-blue" style="width:100%;height:100%;border-radius:50%"></div>`;
+    case 'chat': return `<div class="av-chat" style="width:100%;height:100%;border-radius:50%;align-items:center;justify-content:center;display:flex"><svg viewBox="0 0 24 24" width="36" height="36" stroke="#8f8aa8" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>`;
+    case 'xdark': return `<div class="av-xdark" style="width:100%;height:100%;border-radius:50%"><span class="x">X</span><span class="lbl">Dark</span></div>`;
+    case 'dletter': return `<div class="av-dletter" style="width:100%;height:100%;border-radius:50%">D</div>`;
+    case 'sphere': return `<div class="av-sphere" style="width:100%;height:100%;border-radius:50%"><span class="t1">SUPER DARK</span><span class="t2">Trading</span></div>`;
+    default: return `<div style="width:100%;height:100%;border-radius:50%;background:var(--card-2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.5rem;color:var(--purple-glow)">${esc(b.name.slice(0,1).toUpperCase())}</div>`;
+  }
+}
+
+/* ===========================================================
+   RENDER: STATS
+=========================================================== */
+function renderStats(){
+  document.getElementById('statsGrid').innerHTML = DB.stats.map((s,i)=>`
+    <div class="stat-card">
+      <div class="stat-icon">${STAT_ICONS[i]||''}</div>
+      <div class="num">${esc(s.num)}</div>
+      <div class="lbl">${esc(lang==='ar' ? (s.lbl_ar||s.lbl) : s.lbl)}</div>
+    </div>
+  `).join('');
+}
+
+/* ===========================================================
+   RENDER: BRANCHES
+=========================================================== */
+function branchCard(b){
+  const sizeClass = b.size==='md' ? 'md' : 'lg';
+  return `<div class="branch ${sizeClass}" onclick="showBranch(${b.id})">
+    ${isAdmin ? `<button class="del" onclick="event.stopPropagation();deleteBranch(${b.id})" title="حذف" aria-label="حذف">&#x2715;</button>` : ''}
+    <div class="av">${avatarInner(b)}</div>
+    <div class="name">${esc(b.name)}</div>
+  </div>`;
+}
+
+function renderBranches(){
+  const empty = `<div class="empty">${t('no_branches')}</div>`;
+  document.getElementById('homeBranches').innerHTML = DB.branches.slice(0,6).map(branchCard).join('') || empty;
+  document.getElementById('branchesFull').innerHTML = DB.branches.map(branchCard).join('') || empty;
+}
+
+function showBranch(id){
+  const b = DB.branches.find(x=>x.id===id); if(!b) return;
+  document.getElementById('branchModalTitle').textContent = b.name;
+  const desc = lang==='ar' ? (b.desc_ar||b.desc) : b.desc;
+  document.getElementById('branchModalDesc').textContent = desc || 'No description available.';
+  const linkEl = document.getElementById('branchModalLink');
+  if(b.link && b.link.startsWith('http')){
+    linkEl.href = b.link;
+    linkEl.style.display = 'inline-flex';
+  } else {
+    linkEl.style.display = 'none';
+  }
+  openModal('branchModalBg');
+}
+
+function deleteBranch(id){
+  if(!confirm('حذف هذا الفرع؟')) return;
+  DB.branches = DB.branches.filter(x=>x.id!==id);
+  saveDB();
+  renderBranches(); renderAdminBranches();
+  toast('تم حذف الفرع');
+}
+
+/* ===========================================================
+   RENDER: ARTICLES
+=========================================================== */
+function articleCard(a){
+  const title = lang==='ar' ? (a.title_ar||a.title) : a.title;
+  const summary = lang==='ar' ? (a.summary_ar||a.summary) : a.summary;
+  return `<div class="art-card" onclick="openArticle(${a.id})">
+    ${isAdmin ? `<button class="btn btn-danger btn-sm del" onclick="event.stopPropagation();deleteArticle(${a.id})">حذف</button>` : ''}
+    <div class="art-thumb">
+      ${a.img ? `<img src="${esc(a.img)}" alt="${esc(title)}">` : `<svg class="glyph" width="70" height="70" viewBox="0 0 64 64"><path d="M32 4 L26 11 L18 9 L18 16 L10 16 L13 24 L32 30 L51 24 L54 16 L46 16 L46 9 L38 11 Z" fill="url(#metalGrad)"/><path d="M32 14 L52 21 V33 C52 46 42 55 32 60 C22 55 12 46 12 33 V21 Z" fill="url(#metalGrad)"/></svg>`}
+      <span class="badge">${esc(a.badge||'Article')}</span>
+    </div>
+    <div class="art-body">
+      <h3>${esc(title)}</h3>
+      <p>${esc(summary)}</p>
+      <div class="art-meta">${esc(a.date)} &bull; ${esc(a.read)}</div>
+    </div>
+  </div>`;
+}
+
+function renderArticles(){
+  const sorted = [...DB.articles].reverse();
+  const empty = `<div class="empty">${t('no_articles')}</div>`;
+  document.getElementById('homeArticles').innerHTML = sorted.slice(0,3).map(articleCard).join('') || empty;
+  document.getElementById('articlesFull').innerHTML = sorted.map(articleCard).join('') || empty;
+}
+
+function renderArticleDetail(){
+  const a = DB.articles.find(x=>x.id===currentArticleId);
+  const box = document.getElementById('articleDetailBody');
+  if(!a){ box.innerHTML = `<div class="empty">المقالة غير موجودة</div>`; return; }
+  const title = lang==='ar' ? (a.title_ar||a.title) : a.title;
+  const content = lang==='ar' ? (a.content_ar||a.content) : a.content;
+  box.innerHTML = `
+    <div class="article-hero">${a.img ? `<img src="${esc(a.img)}" alt="${esc(title)}">` : ''}</div>
+    <h1>${esc(title)}</h1>
+    <div class="meta">${esc(a.badge||'')} &bull; ${esc(a.date)} &bull; ${esc(a.read)}</div>
+    <div class="content">${esc(content)}</div>
+  `;
+}
+
+function deleteArticle(id){
+  if(!confirm('حذف هذه المقالة؟')) return;
+  DB.articles = DB.articles.filter(x=>x.id!==id);
+  saveDB();
+  renderArticles(); renderAdminArticles();
+  toast('تم حذف المقالة');
+}
+
+/* ===========================================================
+   RENDER: NEWS
+=========================================================== */
+function newsCard(n){
+  const title = lang==='ar' ? (n.title_ar||n.title) : n.title;
+  const content = lang==='ar' ? (n.content_ar||n.content) : n.content;
+  return `<div class="art-card">
+    ${isAdmin ? `<button class="btn btn-danger btn-sm del" onclick="deleteNews(${n.id})">حذف</button>` : ''}
+    <div class="art-thumb">
+      ${n.img ? `<img src="${esc(n.img)}" alt="${esc(title)}">` : ''}
+      <span class="badge">News</span>
+    </div>
+    <div class="art-body">
+      <h3>${esc(title)}</h3>
+      <p>${esc(content)}</p>
+      <div class="art-meta">${esc(n.date)}</div>
+    </div>
+  </div>`;
+}
+
+function renderNews(){
+  const sorted = [...DB.news].reverse();
+  document.getElementById('newsFull').innerHTML = sorted.map(newsCard).join('') || `<div class="empty">${t('no_news')}</div>`;
+}
+
+/* ===========================================================
+   RENDER: FOOTER
+=========================================================== */
+function renderFooter(){
+  document.getElementById('footSocial').innerHTML = DB.social.map(s=>`
+    <a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" title="${esc(s.name||s.icon)}">${esc(s.icon)}</a>
+  `).join('');
+  const e = document.getElementById('footEmail');
+  e.textContent = DB.contact.email;
+  e.href = 'mailto:' + DB.contact.email;
+  document.getElementById('footPhone').textContent = DB.contact.phone;
+  document.getElementById('footLoc').textContent = DB.contact.loc;
+}
+
+function renderPublicAll(){
+  renderStats(); renderBranches(); renderArticles(); renderNews(); renderFooter();
+  applyHeroContent(); renderNotificationBanner();
+}
+
+/* ===========================================================
+   CONTACT MESSAGE
+=========================================================== */
+function sendMessage(){
+  const name = document.getElementById('msgName').value.trim();
+  const body = document.getElementById('msgBody').value.trim();
+  if(!name || !body){ toast(lang==='ar' ? 'يرجى ملء جميع الحقول' : 'Please fill in all fields'); return; }
+  if(name.length > 80 || body.length > 2000){ toast('المحتوى طويل جداً'); return; }
+  DB.messages.push({id:Date.now(), name, body, date:new Date().toLocaleString()});
+  saveDB();
+  document.getElementById('msgName').value='';
+  document.getElementById('msgBody').value='';
+  closeModal('contactModalBg');
+  toast(lang==='ar' ? 'تم إرسال رسالتك بنجاح' : 'Your message has been sent');
+}
+
+/* ===========================================================
+   ADMIN AUTH — Brute-force protection
+=========================================================== */
+function tryAdminLogin(){
+  const now = Date.now();
+  if(lockoutUntil > now){
+    const secs = Math.ceil((lockoutUntil - now)/1000);
+    document.getElementById('attemptMsg').textContent = `محاولات كثيرة، انتظر ${secs} ثانية`;
+    return;
+  }
+  const p = document.getElementById('adminPass').value;
+  if(p === ADMIN_PASSWORD){
+    loginAttempts = 0;
+    isAdmin = true;
+    document.body.classList.add('admin-mode');
+    document.getElementById('adminGate').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    document.getElementById('adminPass').value='';
+    document.getElementById('attemptBar').style.display='none';
+    document.getElementById('attemptMsg').textContent='';
+    renderAdminAll(); renderPublicAll();
+    toast('مرحباً بك أيها المالك');
+  } else {
+    loginAttempts++;
+    const remaining = MAX_LOGIN_ATTEMPTS - loginAttempts;
+    document.getElementById('attemptBar').style.display='block';
+    document.getElementById('attemptFill').style.width = (loginAttempts/MAX_LOGIN_ATTEMPTS*100)+'%';
+    if(loginAttempts >= MAX_LOGIN_ATTEMPTS){
+      lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+      loginAttempts = 0;
+      document.getElementById('attemptMsg').textContent = 'تم قفل الدخول لمدة دقيقة بسبب كثرة المحاولات الخاطئة';
+      document.getElementById('adminPass').value='';
+    } else {
+      document.getElementById('attemptMsg').textContent = `كلمة مرور خاطئة. محاولات متبقية: ${remaining}`;
+    }
+  }
+}
+
+function adminLogout(){
+  isAdmin = false;
+  document.body.classList.remove('admin-mode');
+  document.getElementById('adminGate').style.display='block';
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('adminPass').value='';
+  document.getElementById('attemptMsg').textContent='';
+  document.getElementById('attemptBar').style.display='none';
+  renderPublicAll();
+  toast('تم تسجيل الخروج');
+}
+
+function switchAdminTab(tab){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.querySelectorAll('.admin-panel-block').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function renderAdminAll(){
+  if(!isAdmin) return;
+  renderStatsEditor();
+  renderAdminBranches();
+  renderAdminArticles();
+  renderAdminNews();
+  renderAdminLinks();
+  renderMessages();
+  renderNotifyAdmin();
+  renderHeroAdmin();
+}
+
+/* ===========================================================
+   ADMIN: STATS EDITOR
+=========================================================== */
+function renderStatsEditor(){
+  document.getElementById('statsEditor').innerHTML = DB.stats.map((s,i)=>`
+    <div class="admin-card" style="margin-bottom:10px;padding:14px">
+      <div class="row2">
+        <div class="field" style="margin:0">
+          <label>القيمة ${i+1}</label>
+          <input type="text" value="${esc(s.num)}" maxlength="20" onchange="DB.stats[${i}].num=this.value">
+        </div>
+        <div class="field" style="margin:0">
+          <label>الوصف (EN)</label>
+          <input type="text" value="${esc(s.lbl)}" maxlength="40" onchange="DB.stats[${i}].lbl=this.value">
+        </div>
+      </div>
+      <div class="field" style="margin-top:8px;margin-bottom:0">
+        <label>الوصف (AR)</label>
+        <input type="text" value="${esc(s.lbl_ar||s.lbl)}" maxlength="40" onchange="DB.stats[${i}].lbl_ar=this.value">
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveStats(){
+  saveDB();
+  renderStats();
+  toast('تم حفظ الإحصائيات');
+}
+
+/* ===========================================================
+   ADMIN: BRANCHES + IMAGE CHANGE BUTTONS
+=========================================================== */
+function addBranch(){
+  const name = document.getElementById('brName').value.trim();
+  const desc = document.getElementById('brDesc').value.trim();
+  const link = document.getElementById('brLink').value.trim();
+  const imgInput = document.getElementById('brImg');
+  if(!name){ toast('أدخل اسم الفرع'); return; }
+  if(name.length > 60 || desc.length > 200){ toast('النص طويل جداً'); return; }
+  fileToDataUrl(imgInput, (img)=>{
+    DB.branches.push({id:Date.now(), name, desc, desc_ar:desc, img, link, kind:'custom', size:'lg'});
+    document.getElementById('brName').value='';
+    document.getElementById('brDesc').value='';
+    document.getElementById('brLink').value='';
+    imgInput.value='';
+    saveDB();
+    renderBranches(); renderAdminBranches();
+    toast('تمت إضافة الفرع');
+  });
+}
+
+function renderAdminBranches(){
+  const container = document.getElementById('branchAdminList');
+  if(!DB.branches.length){
+    container.innerHTML = `<div class="empty">لا توجد فروع</div>`;
+    return;
+  }
+  container.innerHTML = DB.branches.map(b=>`
+    <div class="branch-admin-item">
+      <div class="branch-admin-thumb">
+        ${b.img ? `<img src="${esc(b.img)}" alt="${esc(b.name)}">` : `<div style="width:100%;height:100%;border-radius:50%;background:var(--card-2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;color:var(--purple-glow)">${esc(b.name.slice(0,1).toUpperCase())}</div>`}
+      </div>
+      <div class="branch-admin-info">
+        <b>${esc(b.name)}</b>
+        <span>${esc(b.desc||'بدون وصف')}</span>
+      </div>
+      <div class="branch-admin-actions">
+        <button class="btn btn-success btn-sm" onclick="triggerBranchImgChange(${b.id})" title="تغيير الصورة">
+          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          تغيير الصورة
+        </button>
+        ${b.img ? `<button class="btn btn-outline btn-sm" onclick="removeBranchImg(${b.id})">حذف الصورة</button>` : ''}
+        <button class="btn btn-danger btn-sm" onclick="deleteBranch(${b.id})">حذف</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function triggerBranchImgChange(id){
+  currentBranchImgId = id;
+  const inp = document.getElementById('branchImgInput');
+  inp.value = '';
+  inp.click();
+}
+
+function applyBranchImage(event){
+  const id = currentBranchImgId;
+  if(!id) return;
+  const f = event.target.files[0];
+  if(!f) return;
+  if(f.size > 4 * 1024 * 1024){ toast('الصورة كبيرة جداً (الحد الأقصى 4MB)'); return; }
+  const r = new FileReader();
+  r.onload = ()=>{
+    const b = DB.branches.find(x=>x.id===id);
+    if(b){
+      b.img = r.result;
+      saveDB();
+      renderBranches();
+      renderAdminBranches();
+      toast('تم تغيير صورة الفرع');
+    }
+    currentBranchImgId = null;
+  };
+  r.onerror = ()=>{ toast('خطأ في قراءة الصورة'); };
+  r.readAsDataURL(f);
+}
+
+function removeBranchImg(id){
+  const b = DB.branches.find(x=>x.id===id);
+  if(b){ b.img = ''; saveDB(); renderBranches(); renderAdminBranches(); toast('تم حذف صورة الفرع'); }
+}
+
+/* ===========================================================
+   ADMIN: ARTICLES
+=========================================================== */
+function resetArticleForm(){
+  document.getElementById('artEditId').value='';
+  document.getElementById('artTitle').value='';
+  document.getElementById('artBadge').value='';
+  document.getElementById('artSummary').value='';
+  document.getElementById('artContent').value='';
+  document.getElementById('artImg').value='';
+  document.getElementById('articleFormTitle').textContent='إضافة مقالة جديدة';
+}
+
+function editArticle(id){
+  const a = DB.articles.find(x=>x.id===id); if(!a) return;
+  document.getElementById('artEditId').value=id;
+  document.getElementById('artTitle').value=a.title;
+  document.getElementById('artBadge').value=a.badge;
+  document.getElementById('artSummary').value=a.summary;
+  document.getElementById('artContent').value=a.content;
+  document.getElementById('articleFormTitle').textContent='تعديل المقالة';
+  switchAdminTab('articles');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function saveArticle(){
+  const editId = document.getElementById('artEditId').value;
+  const title = document.getElementById('artTitle').value.trim();
+  const badge = document.getElementById('artBadge').value.trim();
+  const summary = document.getElementById('artSummary').value.trim();
+  const content = document.getElementById('artContent').value.trim();
+  const imgInput = document.getElementById('artImg');
+  if(!title || !content){ toast('أدخل العنوان والمحتوى'); return; }
+  if(title.length > 200 || content.length > 20000){ toast('النص طويل جداً'); return; }
+  fileToDataUrl(imgInput, (img)=>{
+    const today = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+    if(editId){
+      const a = DB.articles.find(x=>x.id==editId);
+      if(a) Object.assign(a, {title, badge, summary, content, img: img||a.img});
+      toast('تم تحديث المقالة');
+    } else {
+      DB.articles.push({id:Date.now(), title, title_ar:title, badge, summary, summary_ar:summary, content, content_ar:content, img, date:today, read:Math.max(1,Math.round(content.length/800))+' min read'});
+      toast('تمت إضافة المقالة');
+    }
+    resetArticleForm();
+    saveDB();
+    renderArticles(); renderAdminArticles();
+  });
+}
+
+function renderAdminArticles(){
+  document.getElementById('articleAdminList').innerHTML = DB.articles.map(a=>`
+    <div class="list-item">
+      <div class="grow"><b>${esc(a.title)}</b><span>${esc(a.date)} &bull; ${esc(a.badge||'')}</span></div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editArticle(${a.id})">تعديل</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteArticle(${a.id})">حذف</button>
+      </div>
+    </div>
+  `).join('') || `<div class="empty">لا توجد مقالات</div>`;
+}
+
+/* ===========================================================
+   ADMIN: NEWS
+=========================================================== */
+function publishNews(){
+  const title = document.getElementById('newsTitle').value.trim();
+  const content = document.getElementById('newsContent').value.trim();
+  const imgInput = document.getElementById('newsImg');
+  if(!title || !content){ toast('أدخل عنوان ونص الخبر'); return; }
+  if(title.length > 200 || content.length > 5000){ toast('النص طويل جداً'); return; }
+  fileToDataUrl(imgInput, (img)=>{
+    DB.news.push({id:Date.now(), title, title_ar:title, content, content_ar:content, img, date:new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})});
+    document.getElementById('newsTitle').value='';
+    document.getElementById('newsContent').value='';
+    imgInput.value='';
+    saveDB();
+    renderNews(); renderAdminNews();
+    toast('تم نشر الخبر');
+  });
+}
+
+function deleteNews(id){
+  if(!confirm('حذف هذا الخبر؟')) return;
+  DB.news = DB.news.filter(x=>x.id!==id);
+  saveDB();
+  renderNews(); renderAdminNews();
+  toast('تم حذف الخبر');
+}
+
+function renderAdminNews(){
+  document.getElementById('newsAdminList').innerHTML = DB.news.map(n=>`
+    <div class="list-item">
+      <div class="grow"><b>${esc(n.title)}</b><span>${esc(n.date)}</span></div>
+      <button class="btn btn-danger btn-sm" onclick="deleteNews(${n.id})">حذف</button>
+    </div>
+  `).join('') || `<div class="empty">لا توجد أخبار</div>`;
+}
+
+/* ===========================================================
+   ADMIN: LINKS / SOCIAL
+=========================================================== */
+function renderAdminLinks(){
+  document.getElementById('cfEmail').value = DB.contact.email;
+  document.getElementById('cfPhone').value = DB.contact.phone;
+  document.getElementById('cfLoc').value = DB.contact.loc;
+  renderSocialAdmin();
+}
+
+function saveContact(){
+  const email = document.getElementById('cfEmail').value.trim();
+  const phone = document.getElementById('cfPhone').value.trim();
+  const loc = document.getElementById('cfLoc').value.trim();
+  if(email.length > 100 || phone.length > 30 || loc.length > 100){ toast('النص طويل جداً'); return; }
+  DB.contact = {email, phone, loc};
+  saveDB();
+  renderFooter();
+  toast('تم حفظ معلومات التواصل');
+}
+
+function addSocial(){
+  const icon = document.getElementById('socIcon').value.trim() || 'LK';
+  const url = document.getElementById('socUrl').value.trim();
+  if(!url){ toast('أدخل الرابط'); return; }
+  if(!url.startsWith('http://') && !url.startsWith('https://')){ toast('الرابط غير صالح'); return; }
+  if(icon.length > 20){ toast('الاسم طويل جداً'); return; }
+  DB.social.push({icon, url, name:icon});
+  document.getElementById('socIcon').value='';
+  document.getElementById('socUrl').value='';
+  saveDB();
+  renderSocialAdmin(); renderFooter();
+  toast('تمت إضافة الرابط');
+}
+
+function removeSocial(i){
+  DB.social.splice(i, 1);
+  saveDB();
+  renderSocialAdmin(); renderFooter();
+}
+
+function renderSocialAdmin(){
+  document.getElementById('socialAdminList').innerHTML = DB.social.map((s,i)=>`
+    <div class="list-item">
+      <div class="grow"><b>${esc(s.icon)}</b><span style="direction:ltr;unicode-bidi:isolate">${esc(s.url)}</span></div>
+      <button class="btn btn-danger btn-sm" onclick="removeSocial(${i})">حذف</button>
+    </div>
+  `).join('') || `<div class="empty">لا توجد روابط</div>`;
+}
+
+/* ===========================================================
+   ADMIN: MESSAGES
+=========================================================== */
+function renderMessages(){
+  const sorted = [...DB.messages].reverse();
+  document.getElementById('msgCount').textContent = sorted.length;
+  document.getElementById('messagesList').innerHTML = sorted.map(m=>`
+    <div class="msg-item">
+      <b>${esc(m.name)}</b>
+      <div style="margin-top:6px;color:var(--text)">${esc(m.body)}</div>
+      <div class="meta">${esc(m.date)}</div>
+    </div>
+  `).join('') || `<div class="empty">لا توجد رسائل بعد</div>`;
+}
+
+/* ===========================================================
+   NOTIFICATION BANNER
+=========================================================== */
+let _notifType = 'info';
+
+function renderNotificationBanner(){
+  const n = DB.notification;
+  const banner = document.getElementById('notifBanner');
+  const dismissed = sessionStorage.getItem('notif_dismissed');
+  if(n && n.enabled && n.message && !dismissed){
+    document.getElementById('notifText').textContent = n.message;
+    banner.className = 'show type-' + (n.type||'info');
+  } else {
+    banner.className = '';
+  }
+}
+
+function dismissNotif(){
+  sessionStorage.setItem('notif_dismissed','1');
+  document.getElementById('notifBanner').className = '';
+}
+
+function selectNotifType(type){
+  _notifType = type;
+  document.querySelectorAll('#notifTypeRow [data-ntype]').forEach(btn=>{
+    btn.style.borderColor = btn.dataset.ntype === type ? 'currentColor' : 'transparent';
+  });
+}
+
+function saveNotification(enable){
+  const msg = document.getElementById('notifMsg').value.trim();
+  if(enable && !msg){ toast('أدخل نص الإشعار أولاً'); return; }
+  DB.notification = {enabled: enable, message: msg, type: _notifType};
+  saveDB();
+  sessionStorage.removeItem('notif_dismissed');
+  renderNotificationBanner();
+  renderNotifyAdmin();
+  toast(enable ? 'تم تفعيل الإشعار' : 'تم إيقاف الإشعار');
+}
+
+function renderNotifyAdmin(){
+  const n = DB.notification;
+  const msgEl = document.getElementById('notifMsg');
+  if(msgEl) msgEl.value = n ? (n.message||'') : '';
+  if(n && n.type) selectNotifType(n.type);
+  const statusEl = document.getElementById('notifStatus');
+  if(statusEl) statusEl.textContent = n && n.enabled ? 'الحالة: مفعّل ✓' : 'الحالة: موقوف';
+}
+
+/* ===========================================================
+   HERO CUSTOMIZATION
+=========================================================== */
+function applyHeroColors(){
+  const h = DB.hero;
+  if(!h) return;
+  const root = document.documentElement;
+  if(h.primaryColor){ root.style.setProperty('--purple-2', h.primaryColor); root.style.setProperty('--purple', h.primaryColor); }
+  if(h.glowColor){ root.style.setProperty('--purple-glow', h.glowColor); }
+}
+
+function applyHeroContent(){
+  const h = DB.hero;
+  if(!h) return;
+  const eyebrow = document.getElementById('heroEyebrowEl');
+  const titleEl  = document.getElementById('heroTitleEl');
+  const descEl   = document.getElementById('heroDescEl');
+  if(eyebrow) eyebrow.textContent = lang==='ar' ? (h.eyebrow_ar||h.eyebrow_en) : h.eyebrow_en;
+  if(titleEl)  titleEl.textContent  = h.title || 'Super Dark';
+  if(descEl)   descEl.textContent   = lang==='ar' ? (h.desc_ar||h.desc_en) : h.desc_en;
+}
+
+function saveHero(){
+  const eyebrowEn     = document.getElementById('heroEyebrowEn').value.trim();
+  const eyebrowAr     = document.getElementById('heroEyebrowAr').value.trim();
+  const title         = document.getElementById('heroTitle').value.trim();
+  const descEn        = document.getElementById('heroDescEn').value.trim();
+  const descAr        = document.getElementById('heroDescAr').value.trim();
+  const primaryColor  = document.getElementById('heroPrimaryColor').value;
+  const glowColor     = document.getElementById('heroGlowColor').value;
+  DB.hero = {
+    eyebrow_en: eyebrowEn || 'Welcome to',
+    eyebrow_ar: eyebrowAr || 'مرحباً بكم في',
+    title: title || 'Super Dark',
+    desc_en: descEn || DB.hero.desc_en,
+    desc_ar: descAr || DB.hero.desc_ar,
+    primaryColor, glowColor
+  };
+  saveDB();
+  applyHeroColors();
+  applyHeroContent();
+  toast('تم حفظ تخصيص الهيرو');
+}
+
+function renderHeroAdmin(){
+  const h = DB.hero || {};
+  const f = (id, val) => { const el = document.getElementById(id); if(el) el.value = val||''; };
+  f('heroEyebrowEn', h.eyebrow_en);
+  f('heroEyebrowAr', h.eyebrow_ar);
+  f('heroTitle', h.title);
+  f('heroDescEn', h.desc_en);
+  f('heroDescAr', h.desc_ar);
+  const pc = document.getElementById('heroPrimaryColor');
+  const gc = document.getElementById('heroGlowColor');
+  if(pc){ pc.value = h.primaryColor||'#9333ea'; document.getElementById('heroPrimaryPreview').style.background = pc.value; }
+  if(gc){ gc.value = h.glowColor||'#b388ff';    document.getElementById('heroGlowPreview').style.background = gc.value; }
+  // live preview on color change
+  if(pc) pc.oninput = ()=>{ document.getElementById('heroPrimaryPreview').style.background = pc.value; };
+  if(gc) gc.oninput = ()=>{ document.getElementById('heroGlowPreview').style.background = gc.value; };
+}
+
+/* ===========================================================
+   DATA: EXPORT / IMPORT / CLEAR
+=========================================================== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(DB, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'superdark-data.json'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 5000);
+  toast('تم تنزيل نسخة البيانات');
+}
+
+function importData(evt){
+  const f = evt.target.files[0]; if(!f) return;
+  if(f.size > 10 * 1024 * 1024){ toast('الملف كبير جداً'); return; }
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const parsed = JSON.parse(r.result);
+      // validate basic structure
+      if(typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid');
+      DB = Object.assign(DB, parsed);
+      saveDB();
+      renderPublicAll(); renderAdminAll();
+      toast('تم استيراد البيانات بنجاح');
+    }catch(e){ toast('ملف JSON غير صالح'); }
+  };
+  r.readAsText(f);
+}
+
+function clearAllData(){
+  if(!confirm('هل أنت متأكد؟ سيتم مسح جميع البيانات المحفوظة.')) return;
+  localStorage.removeItem('superdark_db');
+  location.reload();
+}
+
+/* ===========================================================
+   INIT
+=========================================================== */
+applyHeroColors();
+applyLang();
+renderPublicAll();
+
+/* URL hash routing — supports #admins to open admin */
+window.addEventListener('hashchange', handleHash);
+
+(function(){
+  const hash = window.location.hash.replace('#','').toLowerCase().trim();
+  if(hash === 'admins' || hash === 'admin'){
+    go('admin');
+  } else {
+    go('home');
+  }
+})();
+</script>
+</body>
+</html>
